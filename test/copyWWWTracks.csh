@@ -1,23 +1,31 @@
 #! /bin/csh 
 
+## argv[1] == 1 
+# copy reference files from afs and prepare cfg files
+
+## argv[1] == 2
+# submit cmsRun jobs
+
+
+## argv[1] == 3 
+# run the root macro
+
+## argv[1] == 4 
+# copy plots and root files to afs
+
+
+
+
+
+
+
 ######################
 set RefRelease=CMSSW_1_7_0
 set FilterType=out_of_the_box
 
 #####################
 
-# selection should be something like:
-# "out_of_the_box
-# "dummy_selection"
-# "smart_selection"
 
-#echo "type of selection: " $1
-
-# sample should be something lik:
-# RelValTTbar
-# SingleMuonsPt1
-
-#echo "type of samples: " $2
 
 
 if($1 == 1) then
@@ -40,12 +48,21 @@ foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 Re
     endif
 
 touch $sample.cff
-#cmsRun $sample.cfg >& $sample.log &
 
 end
 
 else if($1 == 2) then
 echo "you choosed option 2"
+
+foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+
+eval `scramv1 run -csh`
+cmsRun $sample.cfg >& $sample.log &
+
+end
+
+else if($1 == 3) then
+echo "you choosed option 3"
 
 
 #    if ( ! -d /afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance/$RELEASE) mkdir /afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance/$RELEASE
