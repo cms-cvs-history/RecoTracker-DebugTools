@@ -4,11 +4,16 @@ void TracksCompare(char* newFile,char* refFile)
  gROOT ->Reset();
  gROOT ->SetBatch();
 
- //========= style settings ====================
+ //=========  settings ====================
  gROOT->SetStyle("Plain");
  gStyle->SetPadGridX(kTRUE);
  gStyle->SetPadGridY(kTRUE);
-
+ //char* refLabel("Zprime 1000GeV, CMSSW_1_7_0 out-of-the-box");
+ //char* newLabel("Zprime 4000GeV, CMSSW_1_7_0 out-of-the-box");
+ char* refLabel("QCD_Pt_80_120,    CMSSW_1_7_0 out-of-the-box");
+ char* newLabel("QCD_Pt_3000_3500, CMSSW_1_7_0 out-of-the-box");
+ //char* refLabel("BBbar, CMSSW_1_7_0 out-of-the-box");
+ //char* newLabel("TTbar, CMSSW_1_7_0 out-of-the-box");
 
 
  //=============================================
@@ -79,8 +84,8 @@ void TracksCompare(char* newFile,char* refFile)
    sh6->GetXaxis()->SetRangeUser(0,10);
 
 
-   rh5->GetYaxis()->SetRangeUser(0.,0.05);
-   sh5->GetYaxis()->SetRangeUser(0.,0.05);
+   rh5->GetYaxis()->SetRangeUser(0.,1.0);
+   sh5->GetYaxis()->SetRangeUser(0.,1.0);
 
 
    plotBuilding(canvas,
@@ -101,8 +106,8 @@ void TracksCompare(char* newFile,char* refFile)
    l->SetLineStyle(1);
    l->SetFillColor(0);
    l->SetBorderSize(3);
-   l->AddEntry(rh1,"BJets 50-120, CMSSW_1_7_0+dummy selection","LPF");
-   l->AddEntry(sh1,"TTbar,        CMSSW_1_7_0+dummy selection","LPF");
+   l->AddEntry(rh1,refLabel,"LPF");
+   l->AddEntry(sh1,newLabel,"LPF");
    l->Draw();
    canvas->Print("building.pdf");   
    delete l;
@@ -144,8 +149,8 @@ void TracksCompare(char* newFile,char* refFile)
    l->SetLineStyle(1);
    l->SetFillColor(0);
    l->SetBorderSize(3);
-   l->AddEntry(rh1,"BJets 50-120, CMSSW_1_7_0+dummy selection","LPF");
-   l->AddEntry(sh1,"TTbar,        CMSSW_1_7_0+dummy selection","LPF");
+   l->AddEntry(rh1,refLabel,"LPF");
+   l->AddEntry(sh1,newLabel,"LPF");
    l->Draw();
    canvas->Print("tuning.pdf");
    delete l;
@@ -209,8 +214,8 @@ void TracksCompare(char* newFile,char* refFile)
    l->SetLineStyle(1);
    l->SetFillColor(0);
    l->SetBorderSize(3);
-   l->AddEntry(rh1,"BJets 50-120, CMSSW_1_7_0+dummy selection","LPF");
-   l->AddEntry(sh1,"TTbar,        CMSSW_1_7_0+dummy selection","LPF");
+   l->AddEntry(rh1,refLabel,"LPF");
+   l->AddEntry(sh1,newLabel,"LPF");
    l->Draw();
    canvas->Print("pulls.pdf");
    delete l;
@@ -255,8 +260,8 @@ void TracksCompare(char* newFile,char* refFile)
    l->SetLineStyle(1);
    l->SetFillColor(0);
    l->SetBorderSize(3);
-   l->AddEntry(rh1,"BJets 50-120, CMSSW_1_7_0+dummy selection","LPF");
-   l->AddEntry(sh1,"TTbar,        CMSSW_1_7_0+dummy selection","LPF");
+   l->AddEntry(rh1,refLabel,"LPF");
+   l->AddEntry(sh1,newLabel,"LPF");
    l->Draw();
    canvas->Print("resolutionsEta.pdf");
    delete l;
@@ -310,8 +315,8 @@ void TracksCompare(char* newFile,char* refFile)
    l->SetLineStyle(1);
    l->SetFillColor(0);
    l->SetBorderSize(3);
-   l->AddEntry(rh1,"BJets 50-120, CMSSW_1_7_0+dummy selection","LPF");
-   l->AddEntry(sh1,"TTbar,        CMSSW_1_7_0+dummy selection","LPF");
+   l->AddEntry(rh1,refLabel,"LPF");
+   l->AddEntry(sh1,newLabel,"LPF");
    l->Draw();
    canvas->Print("resolutionsPt.pdf");
    delete l;
