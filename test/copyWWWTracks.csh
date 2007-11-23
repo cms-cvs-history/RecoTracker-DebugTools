@@ -21,29 +21,30 @@
 
 ######################
 set RefRelease=CMSSW_1_7_0
-set FilterType=out_of_the_box
+set Selection=out_of_the_box
 
 #####################
-
-
+set RELEASE=$CMSSW_VERSION
+set WWWDIR=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 
 
 if($1 == 1) then
 echo "you choosed option 1"
-set RELEASE=$CMSSW_VERSION
-set WWWDIR=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 
 foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
 
     if(! -d $RefRelease) mkdir $RefRelease
-    if(! -d $RELEASE) mkdir $RELEASE
-    cp $WWWDIR/$RefRelease/$FilterType/$sample/val.$sample.root $RefRelease
+    if(! -d output_trees) mkdir output_trees
+    cp $WWWDIR/$RefRelease/$Selection/$sample/val.$sample.root $RefRelease
 
-    if($sample != RelValZPrimeEEM4000) then
-    sed s/NEVENT/2000/g trackingPerformanceValidation.cfg >! tmp1.cfg
+    if($sample == RelValZPrimeEEM4000) then
+    sed s/NEVENT/1000/g trackingPerformanceValidation.cfg >! tmp1.cfg
+    sed s/SAMPLE/$sample/g tmp1.cfg >! $sample.cfg
+    else if($sample == RelValQCD_Pt_3000_3500) then
+    sed s/NEVENT/300/g trackingPerformanceValidation.cfg >! tmp1.cfg
     sed s/SAMPLE/$sample/g tmp1.cfg >! $sample.cfg
     else
-    sed s/NEVENT/300/g trackingPerformanceValidation.cfg >! tmp1.cfg
+    sed s/NEVENT/2000/g trackingPerformanceValidation.cfg >! tmp1.cfg
     sed s/SAMPLE/$sample/g tmp1.cfg >! $sample.cfg
     endif
 
@@ -59,23 +60,38 @@ foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 Re
 eval `scramv1 run -csh`
 cmsRun $sample.cfg >& $sample.log &
 
+
 end
 
 else if($1 == 3) then
 echo "you choosed option 3"
+foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+
+    sed s~NEW_FILE~val.$sample.root~g TracksCompare.C >! tmp1.C
+    sed s~REF_FILE~$RefRelease/val.$sample.root~g tmp1.C >! tmp2.C
+    sed s~REF_LABEL~$sample~g tmp2.C >! tmp3.C
+    sed s~NEW_LABEL~$sample~g tmp3.C >! tmp4.C
+    sed s~REF_RELEASE~$RefRelease~g tmp4.C >! tmp5.C
+    sed s~NEW_RELEASE~$RELEASE~g tmp5.C >! tmp6.C
+    sed s~SELECTION~$Selection~g tmp6.C >! tmp7.C
+    sed s~TracksCompare~$sample~g tmp7.C >! $sample.C
+
+    root -b -q $sample.C > macro.$sample.log
+
+    if ( ! -d $WWWDIR/$RELEASE) mkdir $WWWDIR/$RELEASE
+    if ( ! -d $WWWDIR/$RELEASE/$Selection) mkdir $WWWDIR/$RELEASE/$Selection
+    if ( ! -d $WWWDIR/$RELEASE/$Selection/$sample) mkdir $WWWDIR/$RELEASE/$Selection/$sample
+
+    echo "copying files for sample: " $sample
+    mv *.pdf $WWWDIR/$RELEASE/$Selection/$sample
+
+end
 
 
-#    if ( ! -d /afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance/$RELEASE) mkdir /afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance/$RELEASE
-    
-#    setenv WWWDIRObj /afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance/$RELEASE/$1
-    
-#    if (! -d $WWWDIRObj) mkdir $WWWDIRObj
-    
-#    setenv WWWDIR $WWWDIRObj/$2
-    
-#    if (! -d $WWWDIRObj/$2) mkdir $WWWDIRObj/$2
-    
-#    mv *.pdf $WWWDIRObj/$2
+
+
+
+
 else
     echo "you have to choose between option 1 and option 2"
 endif

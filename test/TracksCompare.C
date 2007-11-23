@@ -1,4 +1,4 @@
-void TracksCompare(char* newFile,char* refFile)
+void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 {
   //gROOT->ProcessLine(".x HistoCompare_Tracks.C");
  gROOT ->Reset();
@@ -10,8 +10,8 @@ void TracksCompare(char* newFile,char* refFile)
  gStyle->SetPadGridY(kTRUE);
  //char* refLabel("Zprime 1000GeV, CMSSW_1_7_0 out-of-the-box");
  //char* newLabel("Zprime 4000GeV, CMSSW_1_7_0 out-of-the-box");
- char* refLabel("QCD_Pt_80_120,    CMSSW_1_7_0 out-of-the-box");
- char* newLabel("QCD_Pt_3000_3500, CMSSW_1_7_0 out-of-the-box");
+ char* refLabel("REF_LABEL, REF_RELEASE SELECTION");
+ char* newLabel("NEW_LABEL, NEW_RELEASE SELECTION");
  //char* refLabel("BBbar, CMSSW_1_7_0 out-of-the-box");
  //char* newLabel("TTbar, CMSSW_1_7_0 out-of-the-box");
 
@@ -99,7 +99,7 @@ void TracksCompare(char* newFile,char* refFile)
    //text->SetFillColor(0);
    //text->SetTextColor(1);
    //text->Draw();
-   l = new TLegend(0.20,0.72,0.8,0.77);
+   l = new TLegend(0.10,0.72,0.90,0.77);
    l->SetTextSize(0.02);
    l->SetLineColor(1);
    l->SetLineWidth(1);
@@ -141,8 +141,8 @@ void TracksCompare(char* newFile,char* refFile)
 	     sh4,rh4,
 	     te,"UU",-1);
    
-   canvas->cd();
-   l = new TLegend(0.20,0.72,0.8,0.77);
+   canvas->cd();   
+   l = new TLegend(0.10,0.72,0.90,0.77);
    l->SetTextSize(0.02);
    l->SetLineColor(1);
    l->SetLineWidth(1);
@@ -207,7 +207,7 @@ void TracksCompare(char* newFile,char* refFile)
 
    canvas->cd();
 
-   l = new TLegend(0.20,0.72,0.8,0.77);
+   l = new TLegend(0.10,0.72,0.90,0.77);
    l->SetTextSize(0.02);
    l->SetLineColor(1);
    l->SetLineWidth(1);
@@ -253,7 +253,7 @@ void TracksCompare(char* newFile,char* refFile)
 
    canvas->cd();
 
-   l = new TLegend(0.20,0.42,0.8,0.47);
+   l = new TLegend(0.10,0.72,0.90,0.77);
    l->SetTextSize(0.02);
    l->SetLineColor(1);
    l->SetLineWidth(1);
@@ -308,7 +308,7 @@ void TracksCompare(char* newFile,char* refFile)
 
    canvas->cd();
 
-   l = new TLegend(0.20,0.47,0.8,0.52);
+   l = new TLegend(0.10,0.72,0.90,0.77);
    l->SetTextSize(0.02);
    l->SetLineColor(1);
    l->SetLineWidth(1);
