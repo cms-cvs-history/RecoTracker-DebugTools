@@ -21,8 +21,9 @@
 
 ######################
 set RefRelease=CMSSW_1_7_0
-set Selection=out_of_the_box
-
+set RefSelection=out_of_the_box
+set NewSelection=pixelLess
+set Sequence=re_tracking
 #####################
 set RELEASE=$CMSSW_VERSION
 set WWWDIR=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
@@ -35,7 +36,8 @@ foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 Re
 
     if(! -d $RefRelease) mkdir $RefRelease
     if(! -d output_trees) mkdir output_trees
-    cp $WWWDIR/$RefRelease/$Selection/$sample/val.$sample.root $RefRelease
+    cp $WWWDIR/$RefRelease/$RefSelection/$sample/val.$sample.root $RefRelease
+    #cp $WWWDIR/$RefRelease/$Selection/$sample/$sample.cff .
 
     if($sample == RelValZPrimeEEM4000) then
     sed s/NEVENT/1000/g trackingPerformanceValidation.cfg >! tmp1.cfg
@@ -45,7 +47,8 @@ foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 Re
     sed s/SAMPLE/$sample/g tmp1.cfg >! $sample.cfg
     else
     sed s/NEVENT/2000/g trackingPerformanceValidation.cfg >! tmp1.cfg
-    sed s/SAMPLE/$sample/g tmp1.cfg >! $sample.cfg
+    sed s/SEQUENCE/$Sequence/g tmp1.cfg >! tmp2.cfg
+    sed s/SAMPLE/$sample/g tmp2.cfg >! $sample.cfg
     endif
 
 touch $sample.cff
@@ -73,24 +76,29 @@ foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 Re
     sed s~NEW_LABEL~$sample~g tmp3.C >! tmp4.C
     sed s~REF_RELEASE~$RefRelease~g tmp4.C >! tmp5.C
     sed s~NEW_RELEASE~$RELEASE~g tmp5.C >! tmp6.C
-    sed s~SELECTION~$Selection~g tmp6.C >! tmp7.C
-    sed s~TracksCompare~$sample~g tmp7.C >! $sample.C
+    sed s~REFSELECTION~$RefSelection~g tmp6.C >! tmp7.C
+    sed s~NEWSELECTION~$NewSelection~g tmp7.C >! tmp8.C
+    sed s~TracksCompare~$sample~g tmp8.C >! $sample.C
 
     root -b -q $sample.C > macro.$sample.log
 
     if ( ! -d $WWWDIR/$RELEASE) mkdir $WWWDIR/$RELEASE
-    if ( ! -d $WWWDIR/$RELEASE/$Selection) mkdir $WWWDIR/$RELEASE/$Selection
-    if ( ! -d $WWWDIR/$RELEASE/$Selection/$sample) mkdir $WWWDIR/$RELEASE/$Selection/$sample
+    if ( ! -d $WWWDIR/$RELEASE/$NewSelection) mkdir $WWWDIR/$RELEASE/$NewSelection
+    if ( ! -d $WWWDIR/$RELEASE/$NewSelection/$sample) mkdir $WWWDIR/$RELEASE/$NewSelection/$sample
 
     echo "copying files for sample: " $sample
-    mv *.pdf $WWWDIR/$RELEASE/$Selection/$sample
+    mv *.pdf $WWWDIR/$RELEASE/$NewSelection/$sample
 
 end
 
 
 
 
+else if($1 == 4) then
+foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
 
+  cp $sample.cff $WWWDIR/$RefRelease/$Selection/$sample/
+end
 
 else
     echo "you have to choose between option 1 and option 2"
