@@ -26,6 +26,7 @@ set NewSelection=fixCkfPattern
 #set Sequence=digi2track
 set Sequence=re_tracking
 #set Sequence=re_tracking
+set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
 #####################
 set RELEASE=$CMSSW_VERSION
 set WWWDIR=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
@@ -34,7 +35,7 @@ set WWWDIR=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracki
 if($1 == 1) then
 echo "you choosed option 1"
 
-foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+foreach sample($samples)
 
     if(! -d $RefRelease) mkdir $RefRelease
     if(! -d output_trees) mkdir output_trees
@@ -42,11 +43,11 @@ foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 Re
     #cp $WWWDIR/$RefRelease/$Selection/$sample/$sample.cff .
 
     if($sample == RelValZPrimeEEM4000) then
-    sed s/NEVENT/1000/g trackingPerformanceValidation.cfg >! tmp1.cfg
+    sed s/NEVENT/500/g trackingPerformanceValidation.cfg >! tmp1.cfg
     else if($sample == RelValQCD_Pt_3000_3500) then
-    sed s/NEVENT/300/g trackingPerformanceValidation.cfg >! tmp1.cfg
+    sed s/NEVENT/100/g trackingPerformanceValidation.cfg >! tmp1.cfg
     else
-    sed s/NEVENT/2000/g trackingPerformanceValidation.cfg >! tmp1.cfg
+    sed s/NEVENT/500/g trackingPerformanceValidation.cfg >! tmp1.cfg
     endif
 
     sed s/SEQUENCE/$Sequence/g tmp1.cfg >! tmp2.cfg
@@ -59,7 +60,7 @@ end
 else if($1 == 2) then
 echo "you choosed option 2"
 
-foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+foreach sample($samples)
 
 eval `scramv1 run -csh`
 cmsRun $sample.cfg >& $sample.log &
@@ -69,7 +70,7 @@ end
 
 else if($1 == 3) then
 echo "you choosed option 3"
-foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+foreach sample($samples)
 
     sed s~NEW_FILE~val.$sample.root~g TracksCompare.C >! tmp1.C
     sed s~REF_FILE~$RefRelease/val.$sample.root~g tmp1.C >! tmp2.C
@@ -102,7 +103,7 @@ end
 
 
 else if($1 == 4) then
-foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+foreach sample( $samples)
 
   cp $sample.cff $WWWDIR/$RefRelease/$Selection/$sample/
 end
