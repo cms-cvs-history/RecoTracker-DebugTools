@@ -22,8 +22,10 @@
 ######################
 set RefRelease=CMSSW_1_7_0
 set RefSelection=out_of_the_box
-set NewSelection=pixelLess
+set NewSelection=fixCkfPattern
+#set Sequence=digi2track
 set Sequence=re_tracking
+#set Sequence=re_tracking
 #####################
 set RELEASE=$CMSSW_VERSION
 set WWWDIR=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
@@ -41,15 +43,14 @@ foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 Re
 
     if($sample == RelValZPrimeEEM4000) then
     sed s/NEVENT/1000/g trackingPerformanceValidation.cfg >! tmp1.cfg
-    sed s/SAMPLE/$sample/g tmp1.cfg >! $sample.cfg
     else if($sample == RelValQCD_Pt_3000_3500) then
     sed s/NEVENT/300/g trackingPerformanceValidation.cfg >! tmp1.cfg
-    sed s/SAMPLE/$sample/g tmp1.cfg >! $sample.cfg
     else
     sed s/NEVENT/2000/g trackingPerformanceValidation.cfg >! tmp1.cfg
+    endif
+
     sed s/SEQUENCE/$Sequence/g tmp1.cfg >! tmp2.cfg
     sed s/SAMPLE/$sample/g tmp2.cfg >! $sample.cfg
-    endif
 
 touch $sample.cff
 
@@ -86,8 +87,14 @@ foreach sample( RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 Re
     if ( ! -d $WWWDIR/$RELEASE/$NewSelection) mkdir $WWWDIR/$RELEASE/$NewSelection
     if ( ! -d $WWWDIR/$RELEASE/$NewSelection/$sample) mkdir $WWWDIR/$RELEASE/$NewSelection/$sample
 
-    echo "copying files for sample: " $sample
-    mv *.pdf $WWWDIR/$RELEASE/$NewSelection/$sample
+    echo "copying pdf files for sample: " $sample
+    cp *.pdf $WWWDIR/$RELEASE/$NewSelection/$sample
+
+    echo "copying root file for sample: " $sample
+    cp val.$sample.root $WWWDIR/$RELEASE/$NewSelection/$sample
+
+    echo "copying cff file for sample: " $sample
+    cp $sample.cff $WWWDIR/$RELEASE/$NewSelection/$sample
 
 end
 
