@@ -8,12 +8,9 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  gROOT->SetStyle("Plain");
  gStyle->SetPadGridX(kTRUE);
  gStyle->SetPadGridY(kTRUE);
- //char* refLabel("Zprime 1000GeV, CMSSW_1_7_0 out-of-the-box");
- //char* newLabel("Zprime 4000GeV, CMSSW_1_7_0 out-of-the-box");
- char* refLabel("REF_LABEL, REF_RELEASE SELECTION");
- char* newLabel("NEW_LABEL, NEW_RELEASE SELECTION");
- //char* refLabel("BBbar, CMSSW_1_7_0 out-of-the-box");
- //char* newLabel("TTbar, CMSSW_1_7_0 out-of-the-box");
+
+ char* refLabel("REF_LABEL, REF_RELEASE REFSELECTION");
+ char* newLabel("NEW_LABEL, NEW_RELEASE NEWSELECTION");
 
 
  //=============================================
