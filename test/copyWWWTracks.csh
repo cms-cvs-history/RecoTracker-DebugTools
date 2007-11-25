@@ -22,7 +22,7 @@
 ######################
 set RefRelease=CMSSW_1_7_0
 set RefSelection=out_of_the_box
-set NewSelection=fixCkfPattern
+set NewSelection=+tagsQueued180pre3
 #set Sequence=digi2track
 set Sequence=re_tracking
 #set Sequence=re_tracking
@@ -82,7 +82,7 @@ foreach sample($samples)
     sed s~NEWSELECTION~$NewSelection~g tmp7.C >! tmp8.C
     sed s~TracksCompare~$sample~g tmp8.C >! $sample.C
 
-    root -b -q $sample.C > macro.$sample.log
+    root -b -q $sample.C > ! macro.$sample.log
 
     if ( ! -d $WWWDIR/$RELEASE) mkdir $WWWDIR/$RELEASE
     if ( ! -d $WWWDIR/$RELEASE/$NewSelection) mkdir $WWWDIR/$RELEASE/$NewSelection
@@ -96,6 +96,9 @@ foreach sample($samples)
 
     echo "copying cff file for sample: " $sample
     cp $sample.cff $WWWDIR/$RELEASE/$NewSelection/$sample
+    
+    rm tmp*.C
+    rm *.pdf
 
 end
 
