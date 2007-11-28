@@ -20,16 +20,16 @@
 
 
 ######################
-set RefRelease=CMSSW_1_3_5
+set RefRelease=CMSSW_1_7_0
 set RefSelection=out_of_the_box
-set NewSelection=out_of_the_box
+set NewSelection=fixInSeedingLayer
 #set Sequence=digi2track
-#set Sequence=re_tracking
-set Sequence=only_validation
-#set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
-set samples=(RelVal-RelVal123QCD_pt80_120)
-set cfg = trackingPerformanceValidation13x.cfg
-#set cfg = trackingPerformanceValidation.cfg
+set Sequence=re_tracking
+#set Sequence=only_validation
+set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar)
+#set samples=(RelVal-RelVal123QCD_pt80_120)
+#set cfg = trackingPerformanceValidation13x.cfg
+set cfg = trackingPerformanceValidation.cfg
 #####################
 set RELEASE=$CMSSW_VERSION
 set WWWDIR=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
@@ -49,8 +49,10 @@ foreach sample($samples)
     sed s/NEVENT/500/g $cfg >! tmp1.cfg
     else if($sample == RelValQCD_Pt_3000_3500) then
     sed s/NEVENT/100/g $cfg >! tmp1.cfg
+    else if($sample == RelValTTbar) then
+    sed s/NEVENT/1000/g $cfg >! tmp1.cfg
     else
-    sed s/NEVENT/500/g $cfg >! tmp1.cfg
+    sed s/NEVENT/2000/g $cfg >! tmp1.cfg
     endif
 
     sed s/SEQUENCE/$Sequence/g tmp1.cfg >! tmp2.cfg
