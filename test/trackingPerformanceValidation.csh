@@ -20,15 +20,14 @@
 
 
 ######################
-set RefRelease=CMSSW_1_7_0
+set RefRelease=CMSSW_1_7_2
 set RefSelection=out_of_the_box
-set NewSelection=out_of_the_box
+set NewSelection=pixelLess
 #set Sequence=digi2track
-#set Sequence=re_tracking
-set Sequence=only_validation
-set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
-#set samples=(RelVal-RelVal123QCD_pt80_120)
-#set samples=(RelVal-RelVal123QCD_pt80_120)
+set Sequence=re_tracking
+#set Sequence=only_validation
+#set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValQCD_Pt_80_120 )
 #set cfg = trackingPerformanceValidation13x.cfg
 set cfg = trackingPerformanceValidation.cfg
 #####################
@@ -44,7 +43,7 @@ foreach sample($samples)
     if(! -d $RefRelease) mkdir $RefRelease
     if(! -d output_trees) mkdir output_trees
     cp $WWWDIR/$RefRelease/$RefSelection/$sample/val.$sample.root $RefRelease
-    #cp $WWWDIR/$RefRelease/$RefSelection/$sample/$sample.cff .
+    cp $WWWDIR/$RefRelease/$RefSelection/$sample/$sample.cff .
 
     if($sample == RelValZPrimeEEM4000) then
     sed s/NEVENT/2000/g $cfg >! tmp1.cfg
@@ -53,7 +52,8 @@ foreach sample($samples)
     else if($sample == RelValTTbar) then
     sed s/NEVENT/2000/g $cfg >! tmp1.cfg
     else
-    sed s/NEVENT/2000/g $cfg >! tmp1.cfg
+    sed s/NEVENT/500/g $cfg >! tmp1.cfg
+    #sed s/NEVENT/2000/g $cfg >! tmp1.cfg
     endif
 
     sed s/SEQUENCE/$Sequence/g tmp1.cfg >! tmp2.cfg

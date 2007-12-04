@@ -8,7 +8,13 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  gROOT->SetStyle("Plain");
  gStyle->SetPadGridX(kTRUE);
  gStyle->SetPadGridY(kTRUE);
-
+ gStyle->SetPadRightMargin(0.07);
+ gStyle->SetPadLeftMargin(0.13);
+ //gStyle->SetTitleXSize(0.07); 
+ //gStyle->SetTitleXOffset(0.6); 
+ //tyle->SetTitleYSize(0.3);
+ //gStyle->SetLabelSize(0.6) 
+ //gStyle->SetTextSize(0.5);
  char* refLabel("REF_LABEL, REF_RELEASE REFSELECTION");
  char* newLabel("NEW_LABEL, NEW_RELEASE NEWSELECTION");
 
@@ -129,8 +135,26 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    fixRangeY(rh2,sh2);
    rh3->GetYaxis()->SetRangeUser(0,2.5);
    sh3->GetYaxis()->SetRangeUser(0,2.5);
+ 
+   rh3->SetTitle("");
+   rh3->GetYaxis()->SetTitleSize(0.05);
+   rh3->GetYaxis()->SetTitleOffset(1.2);
+   rh3->GetYaxis()->SetTitle("<  #chi^{2} / ndf >");
+   rh3->GetXaxis()->SetTitleSize(0.07);
+   rh3->GetXaxis()->SetTitleOffset(0.6);
+   rh3->GetXaxis()->SetTitle("#eta");
+
+
    rh4->GetYaxis()->SetRangeUser(-1.5,1.5);
    sh4->GetYaxis()->SetRangeUser(-1.5,1.5);
+   rh4->SetTitle("");
+   rh4->GetYaxis()->SetTitleSize(0.05);
+   rh4->GetYaxis()->SetTitleOffset(1.2);
+   rh4->GetYaxis()->SetTitle("< #delta p_{t} / p_{t} >");
+   rh4->GetXaxis()->SetTitleSize(0.07);
+   rh4->GetXaxis()->SetTitleOffset(0.6);
+   rh4->GetXaxis()->SetTitle("#eta");
+
      
    plotTuning(canvas,
 	     sh1,rh1,sh2,rh2,
@@ -243,11 +267,73 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    canvas = new TCanvas("Tracks7","Tracks: D0, Z0, Theta resolution",1000,1400);
 
    plotResolutions(canvas,
+		   sh1,rh1,sh2,rh2,
+		   sh3,rh3,sh4,rh4,
+		   sh5,rh5,sh6,rh6,
+		   te,"UU",-1);
+
+   
+   rh1->GetYaxis()->SetRangeUser(0.0005,0.01);
+   sh1->GetYaxis()->SetRangeUser(0.0005,0.01);
+   rh1->SetTitle(""); 
+   rh1->GetYaxis()->SetTitleSize(0.05);
+   rh1->GetYaxis()->SetTitleOffset(1.2);
+   //   rh1->GetYaxis()->SetTitleColor(2);
+   rh1->GetYaxis()->SetTitle("#sigma(#delta #phi) [rad]");
+   rh1->GetXaxis()->SetTitleSize(0.07);
+   rh1->GetXaxis()->SetTitleOffset(0.6);
+   rh1->GetXaxis()->SetTitle("#eta");
+
+   rh2->GetYaxis()->SetRangeUser(0.0003,0.08);
+   sh2->GetYaxis()->SetRangeUser(0.0003,0.08);
+   rh2->SetTitle("");
+   rh2->GetYaxis()->SetTitleSize(0.05);
+   rh2->GetYaxis()->SetTitleOffset(1.2);
+   rh2->GetYaxis()->SetTitle("#sigma(#delta cot(#theta)) ");
+   rh2->GetXaxis()->SetTitleSize(0.07);
+   rh2->GetXaxis()->SetTitleOffset(0.6);
+   rh2->GetXaxis()->SetTitle("#eta");
+
+
+
+   rh3->GetYaxis()->SetRangeUser(0.002,0.2);
+   sh3->GetYaxis()->SetRangeUser(0.002,0.2);
+   rh3->SetTitle("");
+   rh3->GetYaxis()->SetTitleSize(0.05);
+   rh3->GetYaxis()->SetTitleOffset(1.2);
+   rh3->GetYaxis()->SetTitle("#sigma(#delta d_{0}) [cm]");
+   rh3->GetXaxis()->SetTitleSize(0.07);
+   rh3->GetXaxis()->SetTitleOffset(0.6);
+   rh3->GetXaxis()->SetTitle("#eta"); 
+
+
+
+   rh4->GetYaxis()->SetRangeUser(0.001,0.5);
+   sh4->GetYaxis()->SetRangeUser(0.001,0.5);
+   rh4->SetTitle("");
+   rh4->GetYaxis()->SetTitleSize(0.05);
+   rh4->GetYaxis()->SetTitleOffset(1.2);
+   rh4->GetYaxis()->SetTitle("#sigma(#delta z_{0}) [cm]");
+   rh4->GetXaxis()->SetTitleSize(0.07);
+   rh4->GetXaxis()->SetTitleOffset(0.6);
+   rh4->GetXaxis()->SetTitle("#eta");
+
+   rh5->SetTitle("");
+   rh5->GetYaxis()->SetTitleSize(0.05);
+   rh5->GetYaxis()->SetTitleOffset(1.2);
+   rh5->GetYaxis()->SetTitle("#sigma(#delta p_{t}/p_{t}) [%]");
+   rh5->GetXaxis()->SetTitleSize(0.07);
+   rh5->GetXaxis()->SetTitleOffset(0.6);
+   rh5->GetXaxis()->SetTitle("#eta");
+
+
+
+   /* plotResolutions(canvas,
 	     sh1,rh1,sh2,rh2,
 	     sh3,rh3,sh4,rh4,
 	     sh5,rh5,sh6,rh6,
 	     te,"UU",-1);
-
+   */
    canvas->cd();
 
    l = new TLegend(0.10,0.72,0.90,0.77);
@@ -281,16 +367,66 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaptPt",sh5);
 
 
+   rh1->SetTitle("");
+   rh1->GetYaxis()->SetTitleSize(0.05);
+   rh1->GetYaxis()->SetTitleOffset(1.2);
+   rh1->GetYaxis()->SetTitle("#sigma(#delta #phi) [rad]");
+   rh1->GetXaxis()->SetTitleSize(0.055);
+   rh1->GetXaxis()->SetTitleOffset(0.8);
+   rh1->GetXaxis()->SetTitle("p_{t}");
    rh1->GetXaxis()->SetRangeUser(0,30.);
    sh1->GetXaxis()->SetRangeUser(0,30.);
+ 
+
+   rh2->SetTitle("");
+   rh2->GetYaxis()->SetTitleSize(0.05);
+   rh2->GetYaxis()->SetTitleOffset(1.2);
+   rh2->GetYaxis()->SetTitle("#sigma(#delta cot(#theta)) ");
+   rh2->GetXaxis()->SetTitleSize(0.055);
+   rh2->GetXaxis()->SetTitleOffset(0.8);
+   rh2->GetXaxis()->SetTitle("p_{t}");
+
    rh2->GetXaxis()->SetRangeUser(0,30.);
    sh2->GetXaxis()->SetRangeUser(0,30.);
+
+   rh3->SetTitle("");
+   rh3->GetYaxis()->SetTitleSize(0.05);
+   rh3->GetYaxis()->SetTitleOffset(1.2);
+   rh3->GetYaxis()->SetTitle("#sigma(#delta d_{0}) [cm]");
+   rh3->GetXaxis()->SetTitleSize(0.055);
+   rh3->GetXaxis()->SetTitleOffset(0.8);
+   rh3->GetXaxis()->SetTitle("p_{t}");
+
+
    rh3->GetXaxis()->SetRangeUser(0,30.);
    sh3->GetXaxis()->SetRangeUser(0,30.);
+
+
+   rh4->SetTitle("");
+   rh4->GetYaxis()->SetTitleSize(0.05);
+   rh4->GetYaxis()->SetTitleOffset(1.2);
+   rh4->GetYaxis()->SetTitle("#sigma(#delta z_{0}) [cm]");
+   rh4->GetXaxis()->SetTitleSize(0.055);
+   rh4->GetXaxis()->SetTitleOffset(0.8);
+   rh4->GetXaxis()->SetTitle("p_{t}");
+
    rh4->GetXaxis()->SetRangeUser(0,30.);
    sh4->GetXaxis()->SetRangeUser(0,30.);
+
+
+   rh5->SetTitle("");
+   rh5->GetYaxis()->SetTitleSize(0.05);
+   rh5->GetYaxis()->SetTitleOffset(1.2);
+   rh5->GetYaxis()->SetTitle("#sigma(#delta p_{t}/p_{t}) [%]");
+   rh5->GetXaxis()->SetTitleSize(0.055);
+   rh5->GetXaxis()->SetTitleOffset(0.8);
+   rh5->GetXaxis()->SetTitle("p_{t}");
+
+
    rh5->GetXaxis()->SetRangeUser(0,30.);
    sh5->GetXaxis()->SetRangeUser(0,30.);
+
+
    rh6->GetXaxis()->SetRangeUser(0,30.);
    sh6->GetXaxis()->SetRangeUser(0,30.);
 
@@ -708,26 +844,31 @@ void plotResolutions(TCanvas *canvas,
 
   //setStats(r1,s1, startingY, startingX, fit);
   canvas->cd(1);
+  gPad->SetLogy(); 
   setStats(r1,s1, -1, 0, false);
   r1->Draw();
   s1->Draw("sames");
 
   canvas->cd(2);
+  gPad->SetLogy(); 
   setStats(r2,s2, -1, 0, false);
   r2->Draw();
   s2->Draw("sames");
 
   canvas->cd(3);
+  gPad->SetLogy(); 
   setStats(r3,s3, -1, 0, false);
   r3->Draw();
   s3->Draw("sames");
 
   canvas->cd(4);
+  gPad->SetLogy(); 
   setStats(r4,s4, -1, 0, false);
   r4->Draw();
   s4->Draw("sames");
 
   canvas->cd(5);
+  gPad->SetLogy(); 
   setStats(r5,s5, -1, 0, false);
   r5->Draw();
   s5->Draw("sames");
