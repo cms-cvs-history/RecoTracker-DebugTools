@@ -20,12 +20,12 @@
 
 
 ######################
-set RefRelease=CMSSW_1_7_2
+set RefRelease=CMSSW_1_8_0_pre3a
 set RefSelection=out_of_the_box
-set NewSelection=out_of_the_box
+set NewSelection=newCPE
 #set Sequence=digi2track
-#set Sequence=re_tracking
-set Sequence=only_validation
+set Sequence=re_tracking
+#set Sequence=only_validation
 set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
 #set samples=(RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000 )
 #set cfg = trackingPerformanceValidation13x.cfg
@@ -48,7 +48,7 @@ foreach sample($samples)
     if($sample == RelValZPrimeEEM4000) then
     sed s/NEVENT/2000/g $cfg >! tmp1.cfg
     else if($sample == RelValQCD_Pt_3000_3500) then
-    sed s/NEVENT/1000/g $cfg >! tmp1.cfg
+    sed s/NEVENT/300/g $cfg >! tmp1.cfg
     else if($sample == RelValTTbar) then
     sed s/NEVENT/2000/g $cfg >! tmp1.cfg
     else
