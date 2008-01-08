@@ -21,18 +21,20 @@
 
 ######################
 set RefRelease=CMSSW_1_8_0_pre3a
+set NewRelease=$CMSSW_VERSION
 set RefSelection=out_of_the_box
-set NewSelection=newCPE
+set NewSelection=newTrackSelector
+set RefRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
+set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 #set Sequence=digi2track
-set Sequence=re_tracking
-#set Sequence=only_validation
+#set Sequence=re_tracking
+set Sequence=only_validation
 set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
-#set samples=(RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000 )
+#set samples=(RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+#set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar)
 #set cfg = trackingPerformanceValidation13x.cfg
 set cfg = trackingPerformanceValidation.cfg
 #####################
-set RELEASE=$CMSSW_VERSION
-set WWWDIR=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 
 
 if($1 == 1) then
@@ -42,18 +44,17 @@ foreach sample($samples)
 
     if(! -d $RefRelease) mkdir $RefRelease
     if(! -d output_trees) mkdir output_trees
-    cp $WWWDIR/$RefRelease/$RefSelection/$sample/val.$sample.root $RefRelease
-    cp $WWWDIR/$RefRelease/$RefSelection/$sample/$sample.cff .
+    cp $RefRepository/$RefRelease/$RefSelection/$sample/val.$sample.root $RefRelease
+    cp $RefRepository/$RefRelease/$RefSelection/$sample/$sample.cff .
 
     if($sample == RelValZPrimeEEM4000) then
-    sed s/NEVENT/2000/g $cfg >! tmp1.cfg
+    sed s/NEVENT/1000/g $cfg >! tmp1.cfg
     else if($sample == RelValQCD_Pt_3000_3500) then
-    sed s/NEVENT/300/g $cfg >! tmp1.cfg
+    sed s/NEVENT/200/g $cfg >! tmp1.cfg
     else if($sample == RelValTTbar) then
-    sed s/NEVENT/2000/g $cfg >! tmp1.cfg
+    sed s/NEVENT/1000/g $cfg >! tmp1.cfg
     else
-    #sed s/NEVENT/500/g $cfg >! tmp1.cfg
-    sed s/NEVENT/2000/g $cfg >! tmp1.cfg
+    sed s/NEVENT/1000/g $cfg >! tmp1.cfg
     endif
 
     sed s/SEQUENCE/$Sequence/g tmp1.cfg >! tmp2.cfg
@@ -90,18 +91,18 @@ foreach sample($samples)
 
     root -b -q $sample.C > ! macro.$sample.log
 
-    if ( ! -d $WWWDIR/$RELEASE) mkdir $WWWDIR/$RELEASE
-    if ( ! -d $WWWDIR/$RELEASE/$NewSelection) mkdir $WWWDIR/$RELEASE/$NewSelection
-    if ( ! -d $WWWDIR/$RELEASE/$NewSelection/$sample) mkdir $WWWDIR/$RELEASE/$NewSelection/$sample
+    if ( ! -d $NewRepository/$NewRelease)  mkdir $NewRepository/$NewRelease
+    if ( ! -d $NewRepository/$NewRelease/$NewSelection) mkdir $NewRepository/$NewRelease/$NewSelection
+    if ( ! -d $NewRepository/$NewRelease/$NewSelection/$sample) mkdir $NewRepository/$NewRelease/$NewSelection/$sample
 
     echo "copying pdf files for sample: " $sample
-    cp *.pdf $WWWDIR/$RELEASE/$NewSelection/$sample
+    cp *.pdf $NewRepository/$NewRelease/$NewSelection/$sample
 
     echo "copying root file for sample: " $sample
-    cp val.$sample.root $WWWDIR/$RELEASE/$NewSelection/$sample
+    cp val.$sample.root $NewRepository/$NewRelease/$NewSelection/$sample
 
     echo "copying cff file for sample: " $sample
-    cp $sample.cff $WWWDIR/$RELEASE/$NewSelection/$sample
+    cp $sample.cff $NewRepository/$NewRelease/$NewSelection/$sample
     
     rm tmp*.C
     rm *.pdf
@@ -119,7 +120,7 @@ end
 
 else
 
-    echo "you have to choose between option 1 and option 2"
+    echo "you have to choose among option 1, option 2 and option 3"
 endif
 
 
