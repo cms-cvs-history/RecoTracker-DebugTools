@@ -26,6 +26,7 @@ set RefSelection=out_of_the_box
 set NewSelection=newTrackSelector
 set RefRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
+#set NewRepository=myLocalPath
 #set Sequence=digi2track
 #set Sequence=re_tracking
 set Sequence=only_validation
@@ -54,7 +55,7 @@ foreach sample($samples)
     else if($sample == RelValTTbar) then
     sed s/NEVENT/1000/g $cfg >! tmp1.cfg
     else
-    sed s/NEVENT/1000/g $cfg >! tmp1.cfg
+    sed s/NEVENT/2000/g $cfg >! tmp1.cfg
     endif
 
     sed s/SEQUENCE/$Sequence/g tmp1.cfg >! tmp2.cfg
@@ -84,7 +85,7 @@ foreach sample($samples)
     sed s~REF_LABEL~$sample~g tmp2.C >! tmp3.C
     sed s~NEW_LABEL~$sample~g tmp3.C >! tmp4.C
     sed s~REF_RELEASE~$RefRelease~g tmp4.C >! tmp5.C
-    sed s~NEW_RELEASE~$RELEASE~g tmp5.C >! tmp6.C
+    sed s~NEW_RELEASE~$NewRelease~g tmp5.C >! tmp6.C
     sed s~REFSELECTION~$RefSelection~g tmp6.C >! tmp7.C
     sed s~NEWSELECTION~$NewSelection~g tmp7.C >! tmp8.C
     sed s~TracksCompare~$sample~g tmp8.C >! $sample.C
