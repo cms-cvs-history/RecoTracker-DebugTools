@@ -20,10 +20,10 @@
 
 
 ######################
-set RefRelease=CMSSW_1_8_0_pre3a
+set RefRelease=CMSSW_1_8_0_pre5
 set NewRelease=$CMSSW_VERSION
-set RefSelection=out_of_the_box
-set NewSelection=newTrackSelector
+set RefSelection=newTrackSelector+fixElectronTP
+set NewSelection=dummy_selection+fixElectronTP
 set RefRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 #set NewRepository=myLocalPath
@@ -31,7 +31,7 @@ set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction
 #set Sequence=re_tracking
 set Sequence=only_validation
 set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
-#set samples=(RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+#set samples=(RelValTTbar)
 #set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar)
 #set cfg = trackingPerformanceValidation13x.cfg
 set cfg = trackingPerformanceValidation.cfg
@@ -115,8 +115,12 @@ end
 
 else if($1 == 4) then
 foreach sample( $samples)
-
-  cp $sample.cff $WWWDIR/$RefRelease/$Selection/$sample/
+    if (  -d $sample.cfg ) rm $sample.cfg
+    if (  -d $sample.cfc ) rm $sample.cff  
+    if (  -d $sample.C ) rm $sample.C
+    if (  -d $sample.log ) rm $sample.log
+    if (  -d val.$sample.root ) rm val.$sample.root
+    if (  -d macro.$sample.log ) rm macro.$sample.log
 end
 
 else
