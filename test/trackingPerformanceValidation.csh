@@ -20,10 +20,10 @@
 
 
 ######################
-set RefRelease=CMSSW_1_8_0_pre5
+set RefRelease=CMSSW_1_8_0_pre3a
 set NewRelease=$CMSSW_VERSION
-set RefSelection=newTrackSelector+fixElectronTP
-set NewSelection=dummy_selection+fixElectronTP
+set RefSelection=ootb+fixEleTP+fixFilterTP
+set NewSelection=newTrackFilter+fixEleTP+fixFilterTP
 set RefRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 #set NewRepository=myLocalPath
@@ -115,12 +115,12 @@ end
 
 else if($1 == 4) then
 foreach sample( $samples)
-    if (  -d $sample.cfg ) rm $sample.cfg
-    if (  -d $sample.cfc ) rm $sample.cff  
-    if (  -d $sample.C ) rm $sample.C
-    if (  -d $sample.log ) rm $sample.log
-    if (  -d val.$sample.root ) rm val.$sample.root
-    if (  -d macro.$sample.log ) rm macro.$sample.log
+    if (  -f $sample.cfg ) rm $sample.cfg
+    if (  -f $sample.cff ) rm $sample.cff  
+    if (  -f $sample.C ) rm $sample.C
+    if (  -f $sample.log ) rm $sample.log
+    if (  -f val.$sample.root ) rm val.$sample.root
+    if (  -f macro.$sample.log ) rm macro.$sample.log
 end
 
 else
