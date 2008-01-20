@@ -20,18 +20,19 @@
 
 
 ######################
-set RefRelease=CMSSW_1_8_0_pre3a
+set RefRelease=CMSSW_1_8_0_pre6
 set NewRelease=$CMSSW_VERSION
-set RefSelection=ootb+fixEleTP+fixFilterTP
-set NewSelection=newTrackFilter+fixEleTP+fixFilterTP
+set RefSelection=out_of_the_box
+set NewSelection=reTracking_ootb
 set RefRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 #set NewRepository=myLocalPath
 #set Sequence=digi2track
-#set Sequence=re_tracking
-set Sequence=only_validation
-set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
-#set samples=(RelValTTbar)
+#set Sequence=iterative
+#set Sequence=newConfiguration
+set Sequence=re_tracking
+#set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
+set samples=(RelValTTbar)
 #set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar)
 #set cfg = trackingPerformanceValidation13x.cfg
 set cfg = trackingPerformanceValidation.cfg
@@ -39,7 +40,7 @@ set cfg = trackingPerformanceValidation.cfg
 
 
 if($1 == 1) then
-echo "you choosed option 1"
+echo "you chose option 1"
 
 foreach sample($samples)
 
@@ -66,7 +67,7 @@ touch $sample.cff
 end
 
 else if($1 == 2) then
-echo "you choosed option 2"
+echo "you chose option 2"
 
 foreach sample($samples)
 
@@ -77,7 +78,7 @@ cmsRun $sample.cfg >& ! $sample.log &
 end
 
 else if($1 == 3) then
-echo "you choosed option 3"
+echo "you chose option 3"
 foreach sample($samples)
 
     sed s~NEW_FILE~val.$sample.root~g TracksCompare.C >! tmp1.C
@@ -91,7 +92,7 @@ foreach sample($samples)
     sed s~TracksCompare~$sample~g tmp8.C >! $sample.C
 
     root -b -q $sample.C > ! macro.$sample.log
-
+    ./hltTimingSummary -t 10000 -b100 -o $sample.timing -s -i output.$sample.root
     if ( ! -d $NewRepository/$NewRelease)  mkdir $NewRepository/$NewRelease
     if ( ! -d $NewRepository/$NewRelease/$NewSelection) mkdir $NewRepository/$NewRelease/$NewSelection
     if ( ! -d $NewRepository/$NewRelease/$NewSelection/$sample) mkdir $NewRepository/$NewRelease/$NewSelection/$sample
@@ -104,6 +105,9 @@ foreach sample($samples)
 
     echo "copying cff file for sample: " $sample
     cp $sample.cff $NewRepository/$NewRelease/$NewSelection/$sample
+
+    echo "copying cfg file for sample: " $sample
+    cp $sample.cfg $NewRepository/$NewRelease/$NewSelection/$sample
     
     rm tmp*.C
     rm *.pdf
@@ -114,6 +118,7 @@ end
 
 
 else if($1 == 4) then
+echo "you chose option 4"
 foreach sample( $samples)
     if (  -f $sample.cfg ) rm $sample.cfg
     if (  -f $sample.cff ) rm $sample.cff  
@@ -125,7 +130,7 @@ end
 
 else
 
-    echo "you have to choose among option 1, option 2 and option 3"
+    echo "you have to choose among option 1, option 2, option 3 and option 4"
 endif
 
 
