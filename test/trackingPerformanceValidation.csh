@@ -92,7 +92,7 @@ foreach sample($samples)
     sed s~TracksCompare~$sample~g tmp8.C >! $sample.C
 
     root -b -q $sample.C > ! macro.$sample.log
-    ./hltTimingSummary -t 10000 -b100 -o $sample.timing -s -i output.$sample.root
+    $CMSSW_RELEASE_BASE/test/slc4_ia32_gcc345/hltTimingSummary -t 10000 -b100 -o $sample.timing -s -i output.$sample.root
     if ( ! -d $NewRepository/$NewRelease)  mkdir $NewRepository/$NewRelease
     if ( ! -d $NewRepository/$NewRelease/$NewSelection) mkdir $NewRepository/$NewRelease/$NewSelection
     if ( ! -d $NewRepository/$NewRelease/$NewSelection/$sample) mkdir $NewRepository/$NewRelease/$NewSelection/$sample
