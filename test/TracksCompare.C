@@ -50,25 +50,29 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  bool ctf=1;
  bool rs=0;
 
+ TString collname2 = "ctfWithMaterial_AssociatorByHits";
+ TString collname1 = "general_AssociatorByHits";
+
+
  //////////////////////////////////////
  /////////// CTF //////////////////////
  //////////////////////////////////////
  if (ctf){
    //===== building
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/hits_eta",rh1);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/hits_eta",sh1);
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/hits",rh2);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/hits",sh2);
+   rfile->GetObject("DQMData/Track/"+collname1+"/hits_eta",rh1);
+   sfile->GetObject("DQMData/Track/"+collname2+"/hits_eta",sh1);
+   rfile->GetObject("DQMData/Track/"+collname1+"/hits",rh2);
+   sfile->GetObject("DQMData/Track/"+collname2+"/hits",sh2);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/effic",rh3);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/effic",sh3);
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/efficPt",rh4);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/efficPt",sh4);
+   rfile->GetObject("DQMData/Track/"+collname1+"/effic",rh3);
+   sfile->GetObject("DQMData/Track/"+collname2+"/effic",sh3);
+   rfile->GetObject("DQMData/Track/"+collname1+"/efficPt",rh4);
+   sfile->GetObject("DQMData/Track/"+collname2+"/efficPt",sh4);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/fakerate",rh5);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/fakerate",sh5);
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/num_reco_pT",rh6);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/num_reco_pT",sh6);
+   rfile->GetObject("DQMData/Track/"+collname1+"/fakerate",rh5);
+   sfile->GetObject("DQMData/Track/"+collname2+"/fakerate",sh5);
+   rfile->GetObject("DQMData/Track/"+collname1+"/num_reco_pT",rh6);
+   sfile->GetObject("DQMData/Track/"+collname2+"/num_reco_pT",sh6);
 
 
 
@@ -86,9 +90,9 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh6->GetXaxis()->SetRangeUser(0,10);
    sh6->GetXaxis()->SetRangeUser(0,10);
 
-
-   rh5->GetYaxis()->SetRangeUser(0.,1.0);
-   sh5->GetYaxis()->SetRangeUser(0.,1.0);
+   float ymax = 0.50;
+   rh5->GetYaxis()->SetRangeUser(0.,ymax);
+   sh5->GetYaxis()->SetRangeUser(0.,ymax);
 
 
    plotBuilding(canvas,
@@ -116,15 +120,15 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    delete l;
 
    //===== tuning
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/chi2",rh1);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/chi2",sh1);
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/chi2_prob",rh2);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/chi2_prob",sh2);
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/chi2mean",rh3);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/chi2mean",sh3);
+   rfile->GetObject("DQMData/Track/"+collname1+"/chi2",rh1);
+   sfile->GetObject("DQMData/Track/"+collname2+"/chi2",sh1);
+   rfile->GetObject("DQMData/Track/"+collname1+"/chi2_prob",rh2);
+   sfile->GetObject("DQMData/Track/"+collname2+"/chi2_prob",sh2);
+   rfile->GetObject("DQMData/Track/"+collname1+"/chi2mean",rh3);
+   sfile->GetObject("DQMData/Track/"+collname2+"/chi2mean",sh3);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/h_ptshifteta",rh4);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/h_ptshifteta",sh4);
+   rfile->GetObject("DQMData/Track/"+collname1+"/h_ptshifteta",rh4);
+   sfile->GetObject("DQMData/Track/"+collname2+"/h_ptshifteta",sh4);
 
 
    canvas = new TCanvas("Tracks2","Tracks: chi2 & chi2 probability",1000,1050);
@@ -178,23 +182,23 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    
 
    //===== pulls
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullPt",rh1);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullPt",sh1);
+   rfile->GetObject("DQMData/Track/"+collname1+"/pullPt",rh1);
+   sfile->GetObject("DQMData/Track/"+collname2+"/pullPt",sh1);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullQoverp",rh2);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullQoverp",sh2);
+   rfile->GetObject("DQMData/Track/"+collname1+"/pullQoverp",rh2);
+   sfile->GetObject("DQMData/Track/"+collname2+"/pullQoverp",sh2);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullPhi0",rh3);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullPhi0",sh3);
+   rfile->GetObject("DQMData/Track/"+collname1+"/pullPhi0",rh3);
+   sfile->GetObject("DQMData/Track/"+collname2+"/pullPhi0",sh3);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullTheta",rh4);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullTheta",sh4);
+   rfile->GetObject("DQMData/Track/"+collname1+"/pullTheta",rh4);
+   sfile->GetObject("DQMData/Track/"+collname2+"/pullTheta",sh4);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullD0",rh5);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullD0",sh5);
+   rfile->GetObject("DQMData/Track/"+collname1+"/pullD0",rh5);
+   sfile->GetObject("DQMData/Track/"+collname2+"/pullD0",sh5);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullDz",rh6);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/pullDz",sh6);
+   rfile->GetObject("DQMData/Track/"+collname1+"/pullDz",rh6);
+   sfile->GetObject("DQMData/Track/"+collname2+"/pullDz",sh6);
 
 
    canvas = new TCanvas("Tracks4","Tracks: pull of Pt, Qoverp and Phi",1000,1400);
@@ -247,20 +251,20 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    
 
    //===== resolutions vs eta
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaphi",rh1);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaphi",sh1);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmaphi",rh1);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmaphi",sh1);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmacotTheta",rh2);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmacotTheta",sh2);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmacotTheta",rh2);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmacotTheta",sh2);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmad0",rh3);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmad0",sh3);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmad0",rh3);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmad0",sh3);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaz0",rh4);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaz0",sh4);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmaz0",rh4);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmaz0",sh4);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmapt",rh5);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmapt",sh5);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmapt",rh5);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmapt",sh5);
 
 
 
@@ -350,21 +354,21 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    delete l;
 
    //===== resolutions vs pt
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaphiPt",rh1);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaphiPt",sh1);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmaphiPt",rh1);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmaphiPt",sh1);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmacotThetaPt",rh2);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmacotThetaPt",sh2);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmacotThetaPt",rh2);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmacotThetaPt",sh2);
 
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmad0Pt",rh3);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmad0Pt",sh3);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmad0Pt",rh3);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmad0Pt",sh3);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaz0Pt",rh4);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaz0Pt",sh4);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmaz0Pt",rh4);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmaz0Pt",sh4);
 
-   rfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaptPt",rh5);
-   sfile->GetObject("DQMData/Track/cutsCKF_AssociatorByHits/sigmaptPt",sh5);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmaptPt",rh5);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmaptPt",sh5);
 
 
    rh1->SetTitle("");
