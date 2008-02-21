@@ -197,8 +197,8 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rfile->GetObject("DQMData/Track/"+collname1+"/pullDxy",rh5);
    sfile->GetObject("DQMData/Track/"+collname2+"/pullDxy",sh5);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/pullDsz",rh6);
-   sfile->GetObject("DQMData/Track/"+collname2+"/pullDsz",sh6);
+   rfile->GetObject("DQMData/Track/"+collname1+"/pullDz",rh6);
+   sfile->GetObject("DQMData/Track/"+collname2+"/pullDz",sh6);
 
 
    canvas = new TCanvas("Tracks4","Tracks: pull of Pt, Qoverp and Phi",1000,1400);
@@ -260,15 +260,15 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rfile->GetObject("DQMData/Track/"+collname1+"/sigmadxy",rh3);
    sfile->GetObject("DQMData/Track/"+collname2+"/sigmadxy",sh3);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmadsz",rh4);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmadsz",sh4);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmadz",rh4);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmadz",sh4);
 
    rfile->GetObject("DQMData/Track/"+collname1+"/sigmapt",rh5);
    sfile->GetObject("DQMData/Track/"+collname2+"/sigmapt",sh5);
 
 
 
-   canvas = new TCanvas("Tracks7","Tracks: Dxy, Dsz, Theta resolution",1000,1400);
+   canvas = new TCanvas("Tracks7","Tracks: Dxy, Dz, Theta resolution",1000,1400);
 
    plotResolutions(canvas,
 		   sh1,rh1,sh2,rh2,
@@ -364,8 +364,8 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rfile->GetObject("DQMData/Track/"+collname1+"/sigmadxyPt",rh3);
    sfile->GetObject("DQMData/Track/"+collname2+"/sigmadxyPt",sh3);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmadszPt",rh4);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmadszPt",sh4);
+   rfile->GetObject("DQMData/Track/"+collname1+"/sigmadzPt",rh4);
+   sfile->GetObject("DQMData/Track/"+collname2+"/sigmadzPt",sh4);
 
    rfile->GetObject("DQMData/Track/"+collname1+"/sigmaptPt",rh5);
    sfile->GetObject("DQMData/Track/"+collname2+"/sigmaptPt",sh5);
@@ -435,7 +435,7 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    sh6->GetXaxis()->SetRangeUser(0,30.);
 
 
-   canvas = new TCanvas("Tracks7","Tracks: Dxy, Dsz, Theta resolution",1000,1400);
+   canvas = new TCanvas("Tracks7","Tracks: Dxy, Dz, Theta resolution",1000,1400);
 
    plotResolutions(canvas,
 	     sh1,rh1,sh2,rh2,
