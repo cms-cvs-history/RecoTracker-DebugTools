@@ -27,9 +27,18 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 
  TText* te = new TText();
  TFile * sfile = new TFile(newFile);
+ TDirectory * sdir=gDirectory;
  TFile * rfile = new TFile(refFile);
+ TDirectory * rdir=gDirectory;
 
+ if(sfile->cd("DQMData/RecoTrackV")) sfile->cd("DQMData/RecoTrackV/Track");
+ else sfile->cd("DQMData/Track");
+ sdir=gDirectory;
 
+ if(rfile->cd("DQMData/RecoTrackV")) rfile->cd("DQMData/RecoTrackV/Track");
+ else rfile->cd("DQMData/Track");
+ rdir=gDirectory;
+ 
  //HistoCompare_Tracks * myPV = new HistoCompare_Tracks();
 
  TCanvas *canvas;
@@ -59,20 +68,20 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  //////////////////////////////////////
  if (ctf){
    //===== building
-   rfile->GetObject("DQMData/Track/"+collname1+"/hits_eta",rh1);
-   sfile->GetObject("DQMData/Track/"+collname2+"/hits_eta",sh1);
-   rfile->GetObject("DQMData/Track/"+collname1+"/hits",rh2);
-   sfile->GetObject("DQMData/Track/"+collname2+"/hits",sh2);
+   rdir->GetObject(collname1+"/hits_eta",rh1);
+   sdir->GetObject(collname2+"/hits_eta",sh1);
+   rdir->GetObject(collname1+"/hits",rh2);
+   sdir->GetObject(collname2+"/hits",sh2);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/effic",rh3);
-   sfile->GetObject("DQMData/Track/"+collname2+"/effic",sh3);
-   rfile->GetObject("DQMData/Track/"+collname1+"/efficPt",rh4);
-   sfile->GetObject("DQMData/Track/"+collname2+"/efficPt",sh4);
+   rdir->GetObject(collname1+"/effic",rh3);
+   sdir->GetObject(collname2+"/effic",sh3);
+   rdir->GetObject(collname1+"/efficPt",rh4);
+   sdir->GetObject(collname2+"/efficPt",sh4);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/fakerate",rh5);
-   sfile->GetObject("DQMData/Track/"+collname2+"/fakerate",sh5);
-   rfile->GetObject("DQMData/Track/"+collname1+"/num_reco_pT",rh6);
-   sfile->GetObject("DQMData/Track/"+collname2+"/num_reco_pT",sh6);
+   rdir->GetObject(collname1+"/fakerate",rh5);
+   sdir->GetObject(collname2+"/fakerate",sh5);
+   rdir->GetObject(collname1+"/num_reco_pT",rh6);
+   sdir->GetObject(collname2+"/num_reco_pT",sh6);
 
 
 
@@ -120,15 +129,15 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    delete l;
 
    //===== tuning
-   rfile->GetObject("DQMData/Track/"+collname1+"/chi2",rh1);
-   sfile->GetObject("DQMData/Track/"+collname2+"/chi2",sh1);
-   rfile->GetObject("DQMData/Track/"+collname1+"/chi2_prob",rh2);
-   sfile->GetObject("DQMData/Track/"+collname2+"/chi2_prob",sh2);
-   rfile->GetObject("DQMData/Track/"+collname1+"/chi2mean",rh3);
-   sfile->GetObject("DQMData/Track/"+collname2+"/chi2mean",sh3);
+   rdir->GetObject(collname1+"/chi2",rh1);
+   sdir->GetObject(collname2+"/chi2",sh1);
+   rdir->GetObject(collname1+"/chi2_prob",rh2);
+   sdir->GetObject(collname2+"/chi2_prob",sh2);
+   rdir->GetObject(collname1+"/chi2mean",rh3);
+   sdir->GetObject(collname2+"/chi2mean",sh3);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/h_ptshifteta",rh4);
-   sfile->GetObject("DQMData/Track/"+collname2+"/h_ptshifteta",sh4);
+   rdir->GetObject(collname1+"/h_ptshifteta",rh4);
+   sdir->GetObject(collname2+"/h_ptshifteta",sh4);
 
 
    canvas = new TCanvas("Tracks2","Tracks: chi2 & chi2 probability",1000,1050);
@@ -182,23 +191,23 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    
 
    //===== pulls
-   rfile->GetObject("DQMData/Track/"+collname1+"/pullPt",rh1);
-   sfile->GetObject("DQMData/Track/"+collname2+"/pullPt",sh1);
+   rdir->GetObject(collname1+"/pullPt",rh1);
+   sdir->GetObject(collname2+"/pullPt",sh1);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/pullQoverp",rh2);
-   sfile->GetObject("DQMData/Track/"+collname2+"/pullQoverp",sh2);
+   rdir->GetObject(collname1+"/pullQoverp",rh2);
+   sdir->GetObject(collname2+"/pullQoverp",sh2);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/pullPhi",rh3);
-   sfile->GetObject("DQMData/Track/"+collname2+"/pullPhi",sh3);
+   rdir->GetObject(collname1+"/pullPhi",rh3);
+   sdir->GetObject(collname2+"/pullPhi",sh3);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/pullTheta",rh4);
-   sfile->GetObject("DQMData/Track/"+collname2+"/pullTheta",sh4);
+   rdir->GetObject(collname1+"/pullTheta",rh4);
+   sdir->GetObject(collname2+"/pullTheta",sh4);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/pullDxy",rh5);
-   sfile->GetObject("DQMData/Track/"+collname2+"/pullDxy",sh5);
+   rdir->GetObject(collname1+"/pullDxy",rh5);
+   sdir->GetObject(collname2+"/pullDxy",sh5);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/pullDz",rh6);
-   sfile->GetObject("DQMData/Track/"+collname2+"/pullDz",sh6);
+   rdir->GetObject(collname1+"/pullDz",rh6);
+   sdir->GetObject(collname2+"/pullDz",sh6);
 
 
    canvas = new TCanvas("Tracks4","Tracks: pull of Pt, Qoverp and Phi",1000,1400);
@@ -251,20 +260,20 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    
 
    //===== resolutions vs eta
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmaphi",rh1);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmaphi",sh1);
+   rdir->GetObject(collname1+"/sigmaphi",rh1);
+   sdir->GetObject(collname2+"/sigmaphi",sh1);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmacotTheta",rh2);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmacotTheta",sh2);
+   rdir->GetObject(collname1+"/sigmacotTheta",rh2);
+   sdir->GetObject(collname2+"/sigmacotTheta",sh2);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmadxy",rh3);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmadxy",sh3);
+   rdir->GetObject(collname1+"/sigmadxy",rh3);
+   sdir->GetObject(collname2+"/sigmadxy",sh3);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmadz",rh4);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmadz",sh4);
+   rdir->GetObject(collname1+"/sigmadz",rh4);
+   sdir->GetObject(collname2+"/sigmadz",sh4);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmapt",rh5);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmapt",sh5);
+   rdir->GetObject(collname1+"/sigmapt",rh5);
+   sdir->GetObject(collname2+"/sigmapt",sh5);
 
 
 
@@ -354,21 +363,21 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    delete l;
 
    //===== resolutions vs pt
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmaphiPt",rh1);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmaphiPt",sh1);
+   rdir->GetObject(collname1+"/sigmaphiPt",rh1);
+   sdir->GetObject(collname2+"/sigmaphiPt",sh1);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmacotThetaPt",rh2);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmacotThetaPt",sh2);
+   rdir->GetObject(collname1+"/sigmacotThetaPt",rh2);
+   sdir->GetObject(collname2+"/sigmacotThetaPt",sh2);
 
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmadxyPt",rh3);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmadxyPt",sh3);
+   rdir->GetObject(collname1+"/sigmadxyPt",rh3);
+   sdir->GetObject(collname2+"/sigmadxyPt",sh3);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmadzPt",rh4);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmadzPt",sh4);
+   rdir->GetObject(collname1+"/sigmadzPt",rh4);
+   sdir->GetObject(collname2+"/sigmadzPt",sh4);
 
-   rfile->GetObject("DQMData/Track/"+collname1+"/sigmaptPt",rh5);
-   sfile->GetObject("DQMData/Track/"+collname2+"/sigmaptPt",sh5);
+   rdir->GetObject(collname1+"/sigmaptPt",rh5);
+   sdir->GetObject(collname2+"/sigmaptPt",sh5);
 
 
    rh1->SetTitle("");
