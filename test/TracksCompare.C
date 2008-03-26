@@ -59,7 +59,7 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  bool ctf=1;
  bool rs=0;
 
- TString collname2 = "ctfWithMaterial_AssociatorByHits";
+ TString collname2 = "general_AssociatorByHits";
  TString collname1 = "general_AssociatorByHits";
 
 
@@ -90,6 +90,9 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 
    NormalizeHistograms(rh2,sh2);
    NormalizeHistograms(rh6,sh6);
+   rh1->GetYaxis()->SetRangeUser(8,21);
+   sh1->GetYaxis()->SetRangeUser(8,21);
+
    rh3->GetYaxis()->SetRangeUser(0.5,1.025);
    sh3->GetYaxis()->SetRangeUser(0.5,1.025);
 
@@ -157,13 +160,14 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh3->GetXaxis()->SetTitleOffset(0.6);
    rh3->GetXaxis()->SetTitle("#eta");
 
-
+   rh4->Scale(100.);
+   sh4->Scale(100.);
    rh4->GetYaxis()->SetRangeUser(-1.5,1.5);
    sh4->GetYaxis()->SetRangeUser(-1.5,1.5);
    rh4->SetTitle("");
    rh4->GetYaxis()->SetTitleSize(0.05);
    rh4->GetYaxis()->SetTitleOffset(1.2);
-   rh4->GetYaxis()->SetTitle("< #delta p_{t} / p_{t} >");
+   rh4->GetYaxis()->SetTitle("< #delta p_{t} / p_{t} > [%]");
    rh4->GetXaxis()->SetTitleSize(0.07);
    rh4->GetXaxis()->SetTitleOffset(0.6);
    rh4->GetXaxis()->SetTitle("#eta");
@@ -198,12 +202,14 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    sdir->GetObject(collname2+"/pullQoverp",sh2);
 
    rdir->GetObject(collname1+"/pullPhi",rh3);
+   //rdir->GetObject(collname1+"/pullPhi0",rh3);
    sdir->GetObject(collname2+"/pullPhi",sh3);
 
    rdir->GetObject(collname1+"/pullTheta",rh4);
    sdir->GetObject(collname2+"/pullTheta",sh4);
 
    rdir->GetObject(collname1+"/pullDxy",rh5);
+   //rdir->GetObject(collname1+"/pullD0",rh5);
    sdir->GetObject(collname2+"/pullDxy",sh5);
 
    rdir->GetObject(collname1+"/pullDz",rh6);
@@ -267,9 +273,11 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    sdir->GetObject(collname2+"/sigmacotTheta",sh2);
 
    rdir->GetObject(collname1+"/sigmadxy",rh3);
+   //rdir->GetObject(collname1+"/sigmad0",rh3);
    sdir->GetObject(collname2+"/sigmadxy",sh3);
 
    rdir->GetObject(collname1+"/sigmadz",rh4);
+   //rdir->GetObject(collname1+"/sigmaz0",rh4);
    sdir->GetObject(collname2+"/sigmadz",sh4);
 
    rdir->GetObject(collname1+"/sigmapt",rh5);
@@ -371,9 +379,11 @@ void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 
 
    rdir->GetObject(collname1+"/sigmadxyPt",rh3);
+   //rdir->GetObject(collname1+"/sigmad0Pt",rh3);
    sdir->GetObject(collname2+"/sigmadxyPt",sh3);
 
    rdir->GetObject(collname1+"/sigmadzPt",rh4);
+   //rdir->GetObject(collname1+"/sigmaz0Pt",rh4);
    sdir->GetObject(collname2+"/sigmadzPt",sh4);
 
    rdir->GetObject(collname1+"/sigmaptPt",rh5);
