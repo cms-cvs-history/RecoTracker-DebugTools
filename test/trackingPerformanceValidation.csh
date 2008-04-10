@@ -20,19 +20,20 @@
 
 
 ######################
-set RefRelease=CMSSW_1_8_0_pre6
+set RefRelease=CMSSW_2_0_0_pre9
 set NewRelease=$CMSSW_VERSION
 set RefSelection=out_of_the_box
-set NewSelection=reTracking_ootb
+set NewSelection=out_of_the_box
 set RefRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 #set NewRepository=myLocalPath
 #set Sequence=digi2track
 #set Sequence=iterative
 #set Sequence=newConfiguration
-set Sequence=re_tracking
-#set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500 RelValZPrimeEEM1000 RelValZPrimeEEM4000)
-set samples=(RelValTTbar)
+#set Sequence=re_tracking
+set Sequence=only_validation
+set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500)
+set samples=(RelValSingleMuPt1 RelValSingleMuPt10 RelValSingleMuPt100 RelValSingleMuPt1 RelValSinglePiPt10 RelValSinglePiPt100)
 #set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar)
 #set cfg = trackingPerformanceValidation13x.cfg
 set cfg = trackingPerformanceValidation.cfg
@@ -55,6 +56,18 @@ foreach sample($samples)
     sed s/NEVENT/200/g $cfg >! tmp1.cfg
     else if($sample == RelValTTbar) then
     sed s/NEVENT/1000/g $cfg >! tmp1.cfg
+    else if($sample == RelValSingleMuPt1) then
+    sed s/NEVENT/-1/g $cfg >! tmp1.cfg
+    else if($sample == RelValSingleMuPt10) then
+    sed s/NEVENT/-1/g $cfg >! tmp1.cfg
+    else if($sample == RelValSingleMuPt100) then
+    sed s/NEVENT/-1/g $cfg >! tmp1.cfg
+    else if($sample == RelValSinglePiPt1) then
+    sed s/NEVENT/-1/g $cfg >! tmp1.cfg
+    else if($sample == RelValSinglePiPt10) then
+    sed s/NEVENT/-1/g $cfg >! tmp1.cfg
+    else if($sample == RelValSinglePiPt100) then
+    sed s/NEVENT/-1/g $cfg >! tmp1.cfg
     else
     sed s/NEVENT/2000/g $cfg >! tmp1.cfg
     endif
@@ -81,7 +94,7 @@ else if($1 == 3) then
 echo "you chose option 3"
 foreach sample($samples)
 
-    sed s~NEW_FILE~val.$sample.root~g TracksCompare.C >! tmp1.C
+    sed s~NEW_FILE~val.$sample.root~g macro/TrackValHistoPublisher.C >! tmp1.C
     sed s~REF_FILE~$RefRelease/val.$sample.root~g tmp1.C >! tmp2.C
     sed s~REF_LABEL~$sample~g tmp2.C >! tmp3.C
     sed s~NEW_LABEL~$sample~g tmp3.C >! tmp4.C
@@ -89,10 +102,10 @@ foreach sample($samples)
     sed s~NEW_RELEASE~$NewRelease~g tmp5.C >! tmp6.C
     sed s~REFSELECTION~$RefSelection~g tmp6.C >! tmp7.C
     sed s~NEWSELECTION~$NewSelection~g tmp7.C >! tmp8.C
-    sed s~TracksCompare~$sample~g tmp8.C >! $sample.C
+    sed s~TrackValHistoPublisher~$sample~g tmp8.C >! $sample.C
 
     root -b -q $sample.C > ! macro.$sample.log
-    $CMSSW_RELEASE_BASE/test/slc4_ia32_gcc345/hltTimingSummary -t 10000 -b100 -o $sample.timing -s -i output.$sample.root
+    #$CMSSW_RELEASE_BASE/test/slc4_ia32_gcc345/hltTimingSummary -t 10000 -b100 -o $sample.timing -s -i output.$sample.root
     if ( ! -d $NewRepository/$NewRelease)  mkdir $NewRepository/$NewRelease
     if ( ! -d $NewRepository/$NewRelease/$NewSelection) mkdir $NewRepository/$NewRelease/$NewSelection
     if ( ! -d $NewRepository/$NewRelease/$NewSelection/$sample) mkdir $NewRepository/$NewRelease/$NewSelection/$sample

@@ -1,4 +1,4 @@
-void TracksCompare(char* newFile="NEW_FILE",char* refFile="REF_FILE")
+void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 {
   //gROOT->ProcessLine(".x HistoCompare_Tracks.C");
  gROOT ->Reset();
