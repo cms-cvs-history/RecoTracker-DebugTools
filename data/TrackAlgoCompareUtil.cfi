@@ -14,7 +14,6 @@
         InputTag trackingVertexLabel = mergedtruth:MergedTrackTruth
         InputTag beamSpotLabel = offlineBeamSpot
 
-        untracked string assocByHitsLabel = "TrackAssociatorByHits"
-        untracked string assocByChi2Label = "TrackAssociatorByChi2"
+        untracked string assocLabel = "TrackAssociatorByHits"
    }
 
