@@ -59,8 +59,8 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  bool ctf=1;
  bool rs=0;
 
- TString collname2 = "general_AssociatorByHits";
- TString collname1 = "general_AssociatorByHits";
+ TString collname2 = "general_trackingParticleRecoAsssociation";//general_AssociatorByHits
+ TString collname1 = "general_trackingParticleRecoAsssociation";//general_AssociatorByHits
 
 
  //////////////////////////////////////
