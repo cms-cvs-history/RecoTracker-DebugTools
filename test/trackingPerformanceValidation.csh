@@ -20,10 +20,10 @@
 
 
 ######################
-set RefRelease=CMSSW_2_0_0_pre9
+set RefRelease=CMSSW_2_1_0_pre3
 set NewRelease=$CMSSW_VERSION
-set RefSelection=out_of_the_box
-set NewSelection=out_of_the_box
+set RefSelection=out_of_the_box_IDEAL
+set NewSelection=IDEAL_fixedTrackAssociation
 set RefRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 #set NewRepository=myLocalPath
@@ -32,9 +32,10 @@ set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction
 #set Sequence=newConfiguration
 #set Sequence=re_tracking
 set Sequence=only_validation
-set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar RelValQCD_Pt_80_120 RelValQCD_Pt_3000_3500)
-set samples=(RelValSingleMuPt1 RelValSingleMuPt10 RelValSingleMuPt100 RelValSingleMuPt1 RelValSinglePiPt10 RelValSinglePiPt100)
-#set samples=(RelValMinBias RelValHiggsGammaGammaM120 RelValBJets_Pt_50_120 RelValTTbar)
+#set samples=(RelValSingleMuPt1 RelValSingleMuPt10 RelValSingleMuPt100) 
+#set samples=(RelValSinglePiPt1 RelValSinglePiPt10 RelValSinglePiPt100)
+#set samples=(RelValTTbar RelValQCD_Pt_3000_3500 RelValQCD_Pt_80_120)
+set samples=(RelValSingleMuPt1 RelValSingleMuPt10 RelValSingleMuPt100 RelValSinglePiPt1 RelValSinglePiPt10 RelValSinglePiPt100 RelValTTbar RelValQCD_Pt_3000_3500 RelValQCD_Pt_80_120)
 #set cfg = trackingPerformanceValidation13x.cfg
 set cfg = trackingPerformanceValidation.cfg
 #####################
@@ -53,9 +54,9 @@ foreach sample($samples)
     if($sample == RelValZPrimeEEM4000) then
     sed s/NEVENT/1000/g $cfg >! tmp1.cfg
     else if($sample == RelValQCD_Pt_3000_3500) then
-    sed s/NEVENT/200/g $cfg >! tmp1.cfg
+    sed s/NEVENT/5000/g $cfg >! tmp1.cfg
     else if($sample == RelValTTbar) then
-    sed s/NEVENT/1000/g $cfg >! tmp1.cfg
+    sed s/NEVENT/5000/g $cfg >! tmp1.cfg
     else if($sample == RelValSingleMuPt1) then
     sed s/NEVENT/-1/g $cfg >! tmp1.cfg
     else if($sample == RelValSingleMuPt10) then
@@ -69,7 +70,7 @@ foreach sample($samples)
     else if($sample == RelValSinglePiPt100) then
     sed s/NEVENT/-1/g $cfg >! tmp1.cfg
     else
-    sed s/NEVENT/2000/g $cfg >! tmp1.cfg
+    sed s/NEVENT/5000/g $cfg >! tmp1.cfg
     endif
 
     sed s/SEQUENCE/$Sequence/g tmp1.cfg >! tmp2.cfg
