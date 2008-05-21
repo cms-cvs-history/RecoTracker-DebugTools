@@ -298,6 +298,9 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    // for multi-track samples
    //rh1->GetYaxis()->SetRangeUser(0.0008,0.005);
    //sh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   // for single particle pt 10
+   //rh1->GetYaxis()->SetRangeUser(0.00009,0.001);  
+   //sh1->GetYaxis()->SetRangeUser(0.00009,0.001); 
    rh1->GetYaxis()->SetRangeUser(0.0008,0.005);
    sh1->GetYaxis()->SetRangeUser(0.0008,0.005);
    rh1->SetTitle(""); 
@@ -312,6 +315,9 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    // for multi-track samples
    //rh2->GetYaxis()->SetRangeUser(0.0009,0.01);
    //sh2->GetYaxis()->SetRangeUser(0.0009,0.01);
+   // for single particle pt 10
+   //rh2->GetYaxis()->SetRangeUser(0.00009,0.01);
+   //sh2->GetYaxis()->SetRangeUser(0.00009,0.01);
    rh2->GetYaxis()->SetRangeUser(0.0009,0.01);
    sh2->GetYaxis()->SetRangeUser(0.0009,0.01);
    rh2->SetTitle("");
@@ -353,7 +359,7 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh5->SetTitle("");
    rh5->GetYaxis()->SetTitleSize(0.05);
    rh5->GetYaxis()->SetTitleOffset(1.2);
-   rh5->GetYaxis()->SetTitle("#sigma(#delta p_{t}/p_{t}) [%]");
+   rh5->GetYaxis()->SetTitle("#sigma(#delta p_{t}/p_{t}) ");
    rh5->GetXaxis()->SetTitleSize(0.07);
    rh5->GetXaxis()->SetTitleOffset(0.6);
    rh5->GetXaxis()->SetTitle("#eta");
@@ -451,7 +457,7 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh5->SetTitle("");
    rh5->GetYaxis()->SetTitleSize(0.05);
    rh5->GetYaxis()->SetTitleOffset(1.2);
-   rh5->GetYaxis()->SetTitle("#sigma(#delta p_{t}/p_{t}) [%]");
+   rh5->GetYaxis()->SetTitle("#sigma(#delta p_{t}/p_{t}) ");
    rh5->GetXaxis()->SetTitleSize(0.055);
    rh5->GetXaxis()->SetTitleOffset(0.8);
    rh5->GetXaxis()->SetTitle("p_{t}");
