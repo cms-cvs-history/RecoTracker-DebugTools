@@ -59,8 +59,8 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  bool ctf=1;
  bool rs=0;
 
- TString collname2 = "general_trackingParticleRecoAsssociation";//general_AssociatorByHits
- TString collname1 = "general_trackingParticleRecoAsssociation";//general_AssociatorByHits
+ TString collname2 = "general_AssociatorByHits";//general_AssociatorByHits
+ TString collname1 = "general_AssociatorByHits";//general_AssociatorByHits
 
  //TString collname2 = "general_AssociatorByHits";//general_AssociatorByHits
  //TString collname1 = "general_AssociatorByHits";//general_AssociatorByHits
@@ -121,7 +121,7 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    //text->SetTextColor(1);
    //text->Draw();
    l = new TLegend(0.10,0.72,0.90,0.77);
-   l->SetTextSize(0.02);
+   l->SetTextSize(0.016);
    l->SetLineColor(1);
    l->SetLineWidth(1);
    l->SetLineStyle(1);
@@ -182,8 +182,8 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 	     te,"UU",-1);
    
    canvas->cd();   
-   l = new TLegend(0.10,0.72,0.90,0.77);
-   l->SetTextSize(0.02);
+   l = new TLegend(0.20,0.48,0.90,0.53);
+   l->SetTextSize(0.016);
    l->SetLineColor(1);
    l->SetLineWidth(1);
    l->SetLineStyle(1);
@@ -249,8 +249,8 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 
    canvas->cd();
 
-   l = new TLegend(0.10,0.72,0.90,0.77);
-   l->SetTextSize(0.02);
+   l = new TLegend(0.20,0.655,0.80,0.69);
+   l->SetTextSize(0.016);
    l->SetLineColor(1);
    l->SetLineWidth(1);
    l->SetLineStyle(1);
@@ -294,10 +294,12 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 		   sh3,rh3,sh4,rh4,
 		   sh5,rh5,sh6,rh6,
 		   te,"UU",-1);
-
    
-   rh1->GetYaxis()->SetRangeUser(0.0005,0.01);
-   sh1->GetYaxis()->SetRangeUser(0.0005,0.01);
+   // for multi-track samples
+   //rh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   //sh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   rh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   sh1->GetYaxis()->SetRangeUser(0.0008,0.005);
    rh1->SetTitle(""); 
    rh1->GetYaxis()->SetTitleSize(0.05);
    rh1->GetYaxis()->SetTitleOffset(1.2);
@@ -307,8 +309,11 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh1->GetXaxis()->SetTitleOffset(0.6);
    rh1->GetXaxis()->SetTitle("#eta");
 
-   rh2->GetYaxis()->SetRangeUser(0.0003,0.08);
-   sh2->GetYaxis()->SetRangeUser(0.0003,0.08);
+   // for multi-track samples
+   //rh2->GetYaxis()->SetRangeUser(0.0009,0.01);
+   //sh2->GetYaxis()->SetRangeUser(0.0009,0.01);
+   rh2->GetYaxis()->SetRangeUser(0.0009,0.01);
+   sh2->GetYaxis()->SetRangeUser(0.0009,0.01);
    rh2->SetTitle("");
    rh2->GetYaxis()->SetTitleSize(0.05);
    rh2->GetYaxis()->SetTitleOffset(1.2);
@@ -318,9 +323,11 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh2->GetXaxis()->SetTitle("#eta");
 
 
-
-   rh3->GetYaxis()->SetRangeUser(0.002,0.2);
-   sh3->GetYaxis()->SetRangeUser(0.002,0.2);
+   // for multi-track samples
+   //rh3->GetYaxis()->SetRangeUser(0.0009,0.02);  
+   //sh3->GetYaxis()->SetRangeUser(0.0009,0.02);
+   rh3->GetYaxis()->SetRangeUser(0.0009,0.02);
+   sh3->GetYaxis()->SetRangeUser(0.0009,0.02);
    rh3->SetTitle("");
    rh3->GetYaxis()->SetTitleSize(0.05);
    rh3->GetYaxis()->SetTitleOffset(1.2);
@@ -330,9 +337,11 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh3->GetXaxis()->SetTitle("#eta"); 
 
 
-
-   rh4->GetYaxis()->SetRangeUser(0.001,0.5);
-   sh4->GetYaxis()->SetRangeUser(0.001,0.5);
+   // for multi-track samples
+   //rh4->GetYaxis()->SetRangeUser(0.0009,0.08);
+   //sh4->GetYaxis()->SetRangeUser(0.0009,0.08);
+   rh4->GetYaxis()->SetRangeUser(0.0009,0.08);
+   sh4->GetYaxis()->SetRangeUser(0.0009,0.08);
    rh4->SetTitle("");
    rh4->GetYaxis()->SetTitleSize(0.05);
    rh4->GetYaxis()->SetTitleOffset(1.2);
@@ -359,8 +368,8 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    */
    canvas->cd();
 
-   l = new TLegend(0.10,0.72,0.90,0.77);
-   l->SetTextSize(0.02);
+   l = new TLegend(0.10,0.63,0.90,0.67);
+   l->SetTextSize(0.016);
    l->SetLineColor(1);
    l->SetLineWidth(1);
    l->SetLineStyle(1);
@@ -466,8 +475,8 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 
    canvas->cd();
 
-   l = new TLegend(0.10,0.72,0.90,0.77);
-   l->SetTextSize(0.02);
+   l = new TLegend(0.10,0.63,0.90,0.67);
+   l->SetTextSize(0.016);
    l->SetLineColor(1);
    l->SetLineWidth(1);
    l->SetLineStyle(1);
