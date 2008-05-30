@@ -1,19 +1,17 @@
+module trackAlgoCompare = TrackAlgoCompareUtil
+{
+    InputTag trackLabel_algoA = generalTracks
+    InputTag trackLabel_algoB = secStep
+    InputTag trackingParticleLabel_fakes = mergedtruth:MergedTrackTruth
+    InputTag trackingParticleLabel_effic = mergedtruth:MergedTrackTruth
+    InputTag vertexLabel_algoA = offlinePrimaryVerticesFromCTFTracks
+    InputTag vertexLabel_algoB = offlinePrimaryVerticesFromCTFTracks
+    InputTag beamSpotLabel = offlineBeamSpot
+    untracked string assocLabel = "TrackAssociatorByHits"
 
-
- module trackAlgoCompare = TrackAlgoCompareUtil
-   {
-        InputTag trackLabel_algoA = generalTracks
-        InputTag trackLabel_algoB = rsWithMaterialTracks
-        InputTag trackingParticleLabel_fakes = mergedtruth:MergedTrackTruth
-        InputTag trackingParticleLabel_effic = mergedtruth:MergedTrackTruth
-        #InputTag trackingParticleLabel_fakes = cutsTPFake
-        #InputTag trackingParticleLabel_effic = cutsTPEffic
-        InputTag vertexLabel_algoA = offlinePrimaryVerticesFromCTFTracks
-        InputTag vertexLabel_algoB = offlinePrimaryVertices
-        #InputTag vertexLabel_algoB = offlinePrimaryVerticesFromRSTracks
-        InputTag trackingVertexLabel = mergedtruth:MergedTrackTruth
-        InputTag beamSpotLabel = offlineBeamSpot
-
-        untracked string assocLabel = "TrackAssociatorByHits"
-   }
+    bool UseAssociators = false
+    InputTag associatormap_algoA = trackingParticleRecoTrackAsssociation
+    InputTag associatormap_algoB = assoc2secStepTk
+    
+}
 
