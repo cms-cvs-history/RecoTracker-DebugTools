@@ -59,13 +59,13 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  bool ctf=1;
  bool rs=0;
 
- TString collname1 = "general_trackingParticleRecoAsssociation";
- TString collname2 = "general_trackingParticleRecoAsssociation";
+ //TString collname1 = "general_trackingParticleRecoAsssociation";
+ //TString collname2 = "general_trackingParticleRecoAsssociation";
 
  //TString collname1 = "cutsReco_AssociatorByHits";//general_AssociatorByHits
  //TString collname2 = "cutsReco_AssociatorByHits";//general_AssociatorByHits
- //TString collname1 = "general_AssociatorByHits";//general_AssociatorByHits
- //TString collname2 = "general_AssociatorByHits";//general_AssociatorByHits
+ TString collname1 = "general_AssociatorByHits";//general_AssociatorByHits
+ TString collname2 = "general_AssociatorByHits";//general_AssociatorByHits
 
  //////////////////////////////////////
  /////////// CTF //////////////////////
@@ -93,9 +93,9 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 
 
    NormalizeHistograms(rh2,sh2);
-   NormalizeHistograms(rh6,sh6);
-   rh1->GetYaxis()->SetRangeUser(8,21);
-   sh1->GetYaxis()->SetRangeUser(8,21);
+   //NormalizeHistograms(rh6,sh6);
+   rh1->GetYaxis()->SetRangeUser(8,24);
+   sh1->GetYaxis()->SetRangeUser(8,24);
 
    rh3->GetYaxis()->SetRangeUser(0.5,1.025);
    sh3->GetYaxis()->SetRangeUser(0.5,1.025);
@@ -298,13 +298,17 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 		   te,"UU",-1);
    
    // for multi-track samples
-   //rh1->GetYaxis()->SetRangeUser(0.0008,0.005);
-   //sh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   rh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   sh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   // for single particle pt 100
+   //rh1->GetYaxis()->SetRangeUser(0.000009,0.0005);
+   //sh1->GetYaxis()->SetRangeUser(0.000009,0.0005);
    // for single particle pt 10
    //rh1->GetYaxis()->SetRangeUser(0.00009,0.001);  
    //sh1->GetYaxis()->SetRangeUser(0.00009,0.001); 
-   rh1->GetYaxis()->SetRangeUser(0.0008,0.005);
-   sh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   // for single particle pt 1
+   //rh1->GetYaxis()->SetRangeUser(0.0008,0.005);
+   //sh1->GetYaxis()->SetRangeUser(0.0008,0.005);
    rh1->SetTitle(""); 
    rh1->GetYaxis()->SetTitleSize(0.05);
    rh1->GetYaxis()->SetTitleOffset(1.2);
@@ -315,13 +319,14 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh1->GetXaxis()->SetTitle("#eta");
 
    // for multi-track samples
-   //rh2->GetYaxis()->SetRangeUser(0.0009,0.01);
-   //sh2->GetYaxis()->SetRangeUser(0.0009,0.01);
+   rh2->GetYaxis()->SetRangeUser(0.0009,0.01);
+   sh2->GetYaxis()->SetRangeUser(0.0009,0.01);
    // for single particle pt 10
    //rh2->GetYaxis()->SetRangeUser(0.00009,0.01);
    //sh2->GetYaxis()->SetRangeUser(0.00009,0.01);
-   rh2->GetYaxis()->SetRangeUser(0.0009,0.01);
-   sh2->GetYaxis()->SetRangeUser(0.0009,0.01);
+   // for single particle pt 1
+   //rh2->GetYaxis()->SetRangeUser(0.0009,0.01);
+   //sh2->GetYaxis()->SetRangeUser(0.0009,0.01);
    rh2->SetTitle("");
    rh2->GetYaxis()->SetTitleSize(0.05);
    rh2->GetYaxis()->SetTitleOffset(1.2);
@@ -332,10 +337,13 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 
 
    // for multi-track samples
-   //rh3->GetYaxis()->SetRangeUser(0.0009,0.02);  
-   //sh3->GetYaxis()->SetRangeUser(0.0009,0.02);
-   rh3->GetYaxis()->SetRangeUser(0.0009,0.02);
+   rh3->GetYaxis()->SetRangeUser(0.0009,0.02);  
    sh3->GetYaxis()->SetRangeUser(0.0009,0.02);
+   //rh3->GetYaxis()->SetRangeUser(0.0009,0.02);
+   //sh3->GetYaxis()->SetRangeUser(0.0009,0.02);
+   // for single particle pt 100    
+   //rh3->GetYaxis()->SetRangeUser(0.00009,0.002);
+   //sh3->GetYaxis()->SetRangeUser(0.00009,0.002);
    rh3->SetTitle("");
    rh3->GetYaxis()->SetTitleSize(0.05);
    rh3->GetYaxis()->SetTitleOffset(1.2);
@@ -346,10 +354,10 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
 
 
    // for multi-track samples
-   //rh4->GetYaxis()->SetRangeUser(0.0009,0.08);
-   //sh4->GetYaxis()->SetRangeUser(0.0009,0.08);
    rh4->GetYaxis()->SetRangeUser(0.0009,0.08);
    sh4->GetYaxis()->SetRangeUser(0.0009,0.08);
+   //rh4->GetYaxis()->SetRangeUser(0.0009,0.08);
+   //sh4->GetYaxis()->SetRangeUser(0.0009,0.08);
    rh4->SetTitle("");
    rh4->GetYaxis()->SetTitleSize(0.05);
    rh4->GetYaxis()->SetTitleOffset(1.2);
