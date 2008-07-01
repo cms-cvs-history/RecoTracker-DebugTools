@@ -62,59 +62,75 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
  //TString collname1 = "general_trackingParticleRecoAsssociation";
  //TString collname2 = "general_trackingParticleRecoAsssociation";
 
- //TString collname1 = "cutsReco_AssociatorByHits";//general_AssociatorByHits
- //TString collname2 = "cutsReco_AssociatorByHits";//general_AssociatorByHits
- TString collname1 = "general_AssociatorByHits";//general_AssociatorByHits
- TString collname2 = "general_AssociatorByHits";//general_AssociatorByHits
+ TString collname1 = "cutsReco_AssociatorByHits";//general_AssociatorByHits
+ TString collname2 = "cutsReco_AssociatorByHits";//general_AssociatorByHits
+ //TString collname1 = "general_AssociatorByHits";//general_AssociatorByHits
+ //TString collname2 = "general_AssociatorByHits";//general_AssociatorByHits
 
  //////////////////////////////////////
  /////////// CTF //////////////////////
  //////////////////////////////////////
  if (ctf){
    //===== building
-   rdir->GetObject(collname1+"/hits_eta",rh1);
-   sdir->GetObject(collname2+"/hits_eta",sh1);
-   rdir->GetObject(collname1+"/hits",rh2);
-   sdir->GetObject(collname2+"/hits",sh2);
+   rdir->GetObject(collname1+"/effic",rh1);
+   sdir->GetObject(collname2+"/effic",sh1);
+   rh1->GetYaxis()->SetRangeUser(0.5,1.025);
+   sh1->GetYaxis()->SetRangeUser(0.5,1.025);
+   rdir->GetObject(collname1+"/fakerate",rh2);
+   sdir->GetObject(collname2+"/fakerate",sh2);
+   rh2->GetYaxis()->SetRangeUser(0.,.50);
+   sh2->GetYaxis()->SetRangeUser(0.,.50);
 
-   rdir->GetObject(collname1+"/effic",rh3);
-   sdir->GetObject(collname2+"/effic",sh3);
-   rdir->GetObject(collname1+"/efficPt",rh4);
-   sdir->GetObject(collname2+"/efficPt",sh4);
 
-   rdir->GetObject(collname1+"/fakerate",rh5);
-   sdir->GetObject(collname2+"/fakerate",sh5);
-   rdir->GetObject(collname1+"/num_reco_pT",rh6);
-   sdir->GetObject(collname2+"/num_reco_pT",sh6);
+   rdir->GetObject(collname1+"/efficPt",rh3);
+   sdir->GetObject(collname2+"/efficPt",sh3);
+   rh3->GetXaxis()->SetRangeUser(0,30);
+   sh3->GetXaxis()->SetRangeUser(0,30);
+   rh3->GetYaxis()->SetTitle("efficiency vs p_{t}");
+   rh3->GetYaxis()->SetTitleSize(0.05);
+   rh3->GetYaxis()->SetTitleOffset(1.2);
+   rh3->SetTitle("");
+   rdir->GetObject(collname1+"/fakeratePt",rh4);
+   sdir->GetObject(collname2+"/fakeratePt",sh4);
+   rh4->SetTitle("");
+   rh4->GetYaxis()->SetTitle("fakrate vs p_{t}");
+   rh4->GetYaxis()->SetTitleSize(0.05);
+   rh4->GetYaxis()->SetTitleOffset(1.2);
+   rh4->GetYaxis()->SetRangeUser(0.,.50);
+   sh4->GetYaxis()->SetRangeUser(0.,.50);
+   rh4->GetXaxis()->SetRangeUser(0.2,50);
+   sh4->GetXaxis()->SetRangeUser(0.2,50);
+
+
+   rdir->GetObject(collname1+"/effic_vs_hit",rh5);
+   sdir->GetObject(collname2+"/effic_vs_hit",sh5);
+   //rh3->GetXaxis()->SetRangeUser(0,30);
+   //sh3->GetXaxis()->SetRangeUser(0,30);
+   rdir->GetObject(collname1+"/fakerate_vs_hit",rh6);
+   sdir->GetObject(collname2+"/fakerate_vs_hit",sh6);
+
+
+   //rdir->GetObject(collname1+"/num_reco_pT",rh6);
+   //sdir->GetObject(collname2+"/num_reco_pT",sh6);
 
 
 
    canvas = new TCanvas("Tracks1","Tracks: efficiency & fakerate",1000,1400);
 
 
-   NormalizeHistograms(rh2,sh2);
+   //NormalizeHistograms(rh2,sh2);
    //NormalizeHistograms(rh6,sh6);
-   rh1->GetYaxis()->SetRangeUser(8,24);
-   sh1->GetYaxis()->SetRangeUser(8,24);
+   //rh1->GetYaxis()->SetRangeUser(8,24);
+   //sh1->GetYaxis()->SetRangeUser(8,24);
 
-   rh3->GetYaxis()->SetRangeUser(0.5,1.025);
-   sh3->GetYaxis()->SetRangeUser(0.5,1.025);
-
-   rh4->GetXaxis()->SetRangeUser(0,30);
-   sh4->GetXaxis()->SetRangeUser(0,30);
-
-   rh6->GetXaxis()->SetRangeUser(0,10);
-   sh6->GetXaxis()->SetRangeUser(0,10);
-
-   float ymax = 0.50;
-   rh5->GetYaxis()->SetRangeUser(0.,ymax);
-   sh5->GetYaxis()->SetRangeUser(0.,ymax);
+   //rh6->GetXaxis()->SetRangeUser(0,10);
+   //sh6->GetXaxis()->SetRangeUser(0,10);
 
 
    plotBuilding(canvas,
+		sh1,rh1,sh2,rh2,
 		sh3,rh3,sh4,rh4,
 		sh5,rh5,sh6,rh6,
-		sh1,rh1,sh2,rh2,
 		te,"UU",-1);
 
    canvas->cd();
@@ -122,7 +138,7 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    //text->SetFillColor(0);
    //text->SetTextColor(1);
    //text->Draw();
-   l = new TLegend(0.10,0.72,0.90,0.77);
+   l = new TLegend(0.10,0.64,0.90,0.69);
    l->SetTextSize(0.016);
    l->SetLineColor(1);
    l->SetLineWidth(1);
@@ -134,6 +150,51 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    l->Draw();
    canvas->Print("building.pdf");   
    delete l;
+
+
+   // ====== hits and pt
+   rdir->GetObject(collname1+"/hits_eta",rh1);                                                                                                                                                                                
+   sdir->GetObject(collname2+"/hits_eta",sh1);                                                                                                                                                                                
+   rdir->GetObject(collname1+"/hits",rh2);                                                                                                                                                                                    
+   sdir->GetObject(collname2+"/hits",sh2);         
+   
+   rdir->GetObject(collname1+"/num_simul_pT",rh3);
+   sdir->GetObject(collname2+"/num_simul_pT",sh3);
+   rdir->GetObject(collname1+"/num_reco_pT",rh4);
+   sdir->GetObject(collname2+"/num_reco_pT",sh4);
+   
+   canvas = new TCanvas("Tracks1","Tracks: efficiency & fakerate",1000,1400);
+   
+   rh1->GetYaxis()->SetRangeUser(8,24);
+   sh1->GetYaxis()->SetRangeUser(8,24);
+   rh2->GetXaxis()->SetRangeUser(0,30);
+   sh2->GetXaxis()->SetRangeUser(0,30);
+   
+   rh3->GetXaxis()->SetRangeUser(0,10);
+   sh3->GetXaxis()->SetRangeUser(0,10);
+   rh4->GetXaxis()->SetRangeUser(0,10);
+   sh4->GetXaxis()->SetRangeUser(0,10);
+   
+   plot4histos(canvas,
+	      sh1,rh1,sh2,rh2,
+	      sh3,rh3,sh4,rh4,
+	      te,"UU",-1);
+   
+   canvas->cd();
+   
+   l = new TLegend(0.20,0.49,0.90,0.54);
+   l->SetTextSize(0.016);
+   l->SetLineColor(1);
+   l->SetLineWidth(1);
+   l->SetLineStyle(1);
+   l->SetFillColor(0);
+   l->SetBorderSize(3);
+   l->AddEntry(rh1,refLabel,"LPF");
+   l->AddEntry(sh1,newLabel,"LPF");
+   l->Draw();
+   canvas->Print("hitsAndPt.pdf");
+   delete l;
+
 
    //===== tuning
    rdir->GetObject(collname1+"/chi2",rh1);
@@ -177,11 +238,10 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    rh4->GetXaxis()->SetTitle("#eta");
 
      
-   plotTuning(canvas,
-	     sh1,rh1,sh2,rh2,
-	     sh3,rh3,sh4,rh4,
-	     sh4,rh4,
-	     te,"UU",-1);
+   plot4histos(canvas,
+	       sh1,rh1,sh2,rh2,
+	       sh3,rh3,sh4,rh4,    
+	       te,"UU",-1);
    
    canvas->cd();   
    l = new TLegend(0.20,0.48,0.90,0.53);
@@ -505,10 +565,9 @@ void TrackValHistoPublisher(char* newFile="NEW_FILE",char* refFile="REF_FILE")
    delete l;
 
 
+ }
+ 
 }
-
-}
-
 
 void NormalizeHistograms(TH1F* h1, TH1F* h2)
 {
@@ -529,10 +588,9 @@ void NormalizeHistograms(TH1F* h1, TH1F* h2)
 
 
 
-void plotTuning(TCanvas *canvas, 
+void plot4histos(TCanvas *canvas, 
 		TH1F *s1,TH1F *r1, TH1F *s2,TH1F *r2, 
 		TH1F *s3,TH1F *r3, TH1F *s4,TH1F *r4,
-		TH1F *s5,TH1F *r5,
 		TText* te,
 	       char * option, double startingY, double startingX = .1,bool fit = false){
   canvas->Divide(2,2);
@@ -567,10 +625,10 @@ void plotTuning(TCanvas *canvas,
   r3->SetMarkerColor(4);
   s3->SetMarkerSize(0.7);
   r3->SetMarkerSize(0.7);
-  s3->SetLineColor(1);
-  r3->SetLineColor(1);
-  //r3->SetLineWidth(2);
-  //s3->SetLineWidth(2);
+  s3->SetLineColor(2);
+  r3->SetLineColor(4);
+  r3->SetLineWidth(2);
+  s3->SetLineWidth(2);
 
   s4->SetMarkerStyle(20);
   r4->SetMarkerStyle(21);
@@ -578,10 +636,10 @@ void plotTuning(TCanvas *canvas,
   r4->SetMarkerColor(4);
   s4->SetMarkerSize(0.7);
   r4->SetMarkerSize(0.7);
-  s4->SetLineColor(1);
-  r4->SetLineColor(1);
-  //  r4->SetLineWidth(2);
-  //s4->SetLineWidth(2);
+  s4->SetLineColor(2);
+  r4->SetLineColor(4);
+  r4->SetLineWidth(2);
+  s4->SetLineWidth(2);
 
 
   //setStats(r1,s1, startingY, startingX, fit);
@@ -596,12 +654,12 @@ void plotTuning(TCanvas *canvas,
   s2->Draw("sames");
 
   canvas->cd(3);
-  setStats(s3,r3, -1, 0.65, false);
+  setStats(s3,r3, 0.6, 0.65, false);
   r3->Draw();
   s3->Draw("sames");
 
   canvas->cd(4);
-  setStats(s4,r4, -1, 0.65, false);
+  setStats(s4,r4, 0.6, 0.65, false);
   r4->Draw();
   s4->Draw("sames");
 
@@ -695,6 +753,7 @@ void plotBuilding(TCanvas *canvas,
   s3->Draw("sames");
 
   canvas->cd(4);
+  gPad->SetLogx();
   setStats(s4,r4, 0.6, 0.65, false);
   r4->Draw();
   s4->Draw("sames");
