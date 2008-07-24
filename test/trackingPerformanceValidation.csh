@@ -20,10 +20,10 @@
 
 
 ######################
-set RefRelease=CMSSW_2_1_0_pre3
+set RefRelease=CMSSW_2_1_0_pre8
 set NewRelease=$CMSSW_VERSION
-set RefSelection=out_of_the_box_IDEAL
-set NewSelection=IDEAL_fixedTrackAssociation
+set RefSelection=IDEAL_V5_out_of_the_box
+set NewSelection=IDEAL_V5_out_of_the_box
 set RefRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction/tracking_performance
 #set NewRepository=myLocalPath
@@ -34,8 +34,8 @@ set NewRepository=/afs/cern.ch/cms/performance/tracker/activities/reconstruction
 set Sequence=only_validation
 #set samples=(RelValSingleMuPt1 RelValSingleMuPt10 RelValSingleMuPt100) 
 #set samples=(RelValSinglePiPt1 RelValSinglePiPt10 RelValSinglePiPt100)
-#set samples=(RelValTTbar RelValQCD_Pt_3000_3500 RelValQCD_Pt_80_120)
-set samples=(RelValSingleMuPt1 RelValSingleMuPt10 RelValSingleMuPt100 RelValSinglePiPt1 RelValSinglePiPt10 RelValSinglePiPt100 RelValTTbar RelValQCD_Pt_3000_3500 RelValQCD_Pt_80_120)
+set samples=(RelValTTbar)
+#set samples=(RelValSingleMuPt1 RelValSingleMuPt10 RelValSingleMuPt100 RelValSinglePiPt1 RelValSinglePiPt10 RelValSinglePiPt100 RelValTTbar RelValQCD_Pt_3000_3500 RelValQCD_Pt_80_120)
 #set cfg = trackingPerformanceValidation13x.cfg
 set cfg = trackingPerformanceValidation.cfg
 #####################
@@ -49,7 +49,7 @@ foreach sample($samples)
     if(! -d $RefRelease) mkdir $RefRelease
     if(! -d output_trees) mkdir output_trees
     cp $RefRepository/$RefRelease/$RefSelection/$sample/val.$sample.root $RefRelease
-    cp $RefRepository/$RefRelease/$RefSelection/$sample/$sample.cff .
+    #cp $RefRepository/$RefRelease/$RefSelection/$sample/$sample.cff .
 
     if($sample == RelValZPrimeEEM4000) then
     sed s/NEVENT/1000/g $cfg >! tmp1.cfg
@@ -86,8 +86,8 @@ echo "you chose option 2"
 foreach sample($samples)
 
 eval `scramv1 run -csh`
-cmsRun $sample.cfg >& ! $sample.log &
-
+#cmsRun $sample.cfg >& ! $sample.log &
+cmsRun $sample.py >& ! $sample.log &
 
 end
 
@@ -118,11 +118,11 @@ foreach sample($samples)
     cp val.$sample.root $NewRepository/$NewRelease/$NewSelection/$sample
 
     echo "copying cff file for sample: " $sample
-    cp $sample.cff $NewRepository/$NewRelease/$NewSelection/$sample
+    #cp $sample.cff $NewRepository/$NewRelease/$NewSelection/$sample
 
     echo "copying cfg file for sample: " $sample
-    cp $sample.cfg $NewRepository/$NewRelease/$NewSelection/$sample
-    
+    #cp $sample.cfg $NewRepository/$NewRelease/$NewSelection/$sample
+    cp $sample.py $NewRepository/$NewRelease/$NewSelection/$sample
     rm tmp*.C
     rm *.pdf
 
