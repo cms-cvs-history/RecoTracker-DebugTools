@@ -10,6 +10,7 @@ module trackAlgoCompare = TrackAlgoCompareUtil
     untracked string assocLabel = "TrackAssociatorByHits"
 
     bool UseAssociators = false
+    bool UseVertex = false
     InputTag associatormap_algoA = trackingParticleRecoTrackAsssociation
     InputTag associatormap_algoB = assoc2secStepTk
     
